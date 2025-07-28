@@ -1,0 +1,99 @@
+# Cài thư viện cần thiết (nếu chưa có)
+!pip install scikit-learn pandas joblib
+
+# Import
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+import joblib
+
+# Tải dataset từ URL
+url = "https://raw.githubusercontent.com/selva86/datasets/master/PimaIndiansDiabetes.csv"
+df = pd.read_csv(url)
+
+# Kiểm tra cấu trúc của dataset
+print("📊 Thông tin về dataset:")
+print("Kích thước:", df.shape)
+print("\nTên các cột:")
+print(df.columns.tolist())
+print("\n5 dòng đầu tiên:")
+print(df.head())
+
+# Kiểm tra tên cột target - thường là cột cuối cùng
+target_column = df.columns[-1]  # Lấy cột cuối cùng
+print(f"\n🎯 Cột target được xác định: '{target_column}'")
+
+# Tách biến đầu vào và đầu ra
+X = df.drop(target_column, axis=1)
+y = df[target_column]
+
+print(f"\n📈 Kích thước dữ liệu:")
+print(f"X (features): {X.shape}")
+print(f"y (target): {y.shape}")
+print(f"Phân bố target: \n{y.value_counts()}")
+
+# Chia train/test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+print(f"\n📂 Chia dữ liệu:")
+print(f"Training set: {X_train.shape[0]} samples")
+print(f"Test set: {X_test.shape[0]} samples")
+
+# Huấn luyện model
+print("\n🤖 Đang huấn luyện model...")
+model = RandomForestClassifier(
+    n_estimators=100,
+    random_state=42,
+    max_depth=10
+)
+model.fit(X_train, y_train)
+
+# Đánh giá model
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+
+print(f"\n📊 Kết quả đánh giá:")
+print(f"Accuracy: {accuracy:.4f}")
+print(f"\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+# Lưu model
+model_filename = "diabetes_model.pkl"
+joblib.dump(model, model_filename)
+
+# Lưu thông tin về features để sử dụng sau này
+feature_names = X.columns.tolist()
+joblib.dump(feature_names, "feature_names.pkl")
+
+print(f"\n✅ Đã train và lưu model thành công!")
+print(f"📁 Model được lưu tại: {model_filename}")
+print(f"📁 Feature names được lưu tại: feature_names.pkl")
+
+# Hiển thị độ quan trọng của các features
+print(f"\n🔍 Độ quan trọng của các features:")
+feature_importance = pd.DataFrame({
+    'feature': feature_names,
+    'importance': model.feature_importances_
+}).sort_values('importance', ascending=False)
+
+for idx, row in feature_importance.iterrows():
+    print(f"{row['feature']}: {row['importance']:.4f}")
+
+# Test thử model với một sample
+print(f"\n🧪 Test model với một sample ngẫu nhiên:")
+sample_idx = 0
+sample_input = X_test.iloc[sample_idx:sample_idx+1]
+prediction = model.predict(sample_input)[0]
+actual = y_test.iloc[sample_idx]
+probability = model.predict_proba(sample_input)[0]
+
+print(f"Input: {sample_input.values[0]}")
+print(f"Prediction: {prediction}")
+print(f"Actual: {actual}")
+print(f"Probability: {probability}")
+print(f"Correct: {'✅' if prediction == actual else '❌'}")
+
+print(f"\n🎉 Hoàn thành!")
