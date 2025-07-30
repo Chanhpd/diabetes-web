@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự đoán bệnh tim</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus, select:focus {
+            border-color: #ff6b6b;
+            outline: none;
+        }
+        
+        input[type="text"]:valid, select:valid {
+            border-color: #28a745;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #ff6b6b;
+            white-space: pre-line;
+        }
+        
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .links a {
+            color: #ff6b6b;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .sample-data {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>❤️ Dự đoán nguy cơ bệnh tim</h2>
+        
+        <form action="/heart" method="post" id="heart-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Age">Tuổi:</label>
+                    <input type="text" id="Age" name="Age" placeholder="VD: 40" required>
+                </div>
+                <div class="form-group">
+                    <label for="Sex">Giới tính:</label>
+                    <select id="Sex" name="Sex" required>
+                        <option value="">Chọn giới tính</option>
+                        <option value="M">Nam</option>
+                        <option value="F">Nữ</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="ChestPainType">Loại đau ngực:</label>
+                <select id="ChestPainType" name="ChestPainType" required>
+                    <option value="">Chọn loại đau ngực</option>
+                    <option value="ATA">ATA - Đau ngực điển hình</option>
+                    <option value="NAP">NAP - Đau ngực không điển hình</option>
+                    <option value="ASY">ASY - Không đau ngực</option>
+                    <option value="TA">TA - Đau ngực không ổn định</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="RestingBP">Huyết áp nghỉ (mmHg):</label>
+                    <input type="text" id="RestingBP" name="RestingBP" placeholder="VD: 140" required>
+                </div>
+                <div class="form-group">
+                    <label for="Cholesterol">Cholesterol (mg/dl):</label>
+                    <input type="text" id="Cholesterol" name="Cholesterol" placeholder="VD: 289" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="FastingBS">Đường huyết lúc đói:</label>
+                    <select id="FastingBS" name="FastingBS" required>
+                        <option value="">Chọn</option>
+                        <option value="0">≤ 120 mg/dl</option>
+                        <option value="1">> 120 mg/dl</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="RestingECG">ECG nghỉ:</label>
+                    <select id="RestingECG" name="RestingECG" required>
+                        <option value="">Chọn</option>
+                        <option value="Normal">Bình thường</option>
+                        <option value="ST">ST-T wave abnormality</option>
+                        <option value="LVH">Left ventricular hypertrophy</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="MaxHR">Nhịp tim tối đa:</label>
+                    <input type="text" id="MaxHR" name="MaxHR" placeholder="VD: 172" required>
+                </div>
+                <div class="form-group">
+                    <label for="ExerciseAngina">Đau thắt ngực khi tập:</label>
+                    <select id="ExerciseAngina" name="ExerciseAngina" required>
+                        <option value="">Chọn</option>
+                        <option value="Y">Có</option>
+                        <option value="N">Không</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Oldpeak">Oldpeak:</label>
+                    <input type="text" id="Oldpeak" name="Oldpeak" placeholder="VD: 0.0" required>
+                </div>
+                <div class="form-group">
+                    <label for="ST_Slope">Độ dốc ST:</label>
+                    <select id="ST_Slope" name="ST_Slope" required>
+                        <option value="">Chọn</option>
+                        <option value="Up">Tăng</option>
+                        <option value="Flat">Phẳng</option>
+                        <option value="Down">Giảm</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button type="submit">🔍 Dự đoán</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result 
+            {% if 'Lỗi' in prediction_text %}error
+            {% elif 'nguy cơ mắc' in prediction_text %}warning  
+            {% else %}success{% endif %}">
+            <strong>Kết quả:</strong> {{ prediction_text }}
+        </div>
+        {% endif %}
+        
+        <div class="sample-data">
+            <strong>📝 Dữ liệu mẫu để test:</strong><br>
+            <strong>Trường hợp bình thường:</strong> 40, M, ATA, 140, 289, 0, Normal, 172, N, 0, Up<br>
+            <strong>Trường hợp có nguy cơ:</strong> 54, M, NAP, 150, 195, 0, Normal, 122, N, 0, Up
+        </div>
+        
+        <div class="links">
+            <a href="/">🩺 Diabetes</a> |
+            <a href="/debug" target="_blank">🔧 Debug Info</a> |
+            <a href="/test" target="_blank">🧪 Test Cases</a>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-fill sample data
+        function fillSample(type) {
+            const inputs = document.querySelectorAll('input[type="text"], select');
+            let sampleData;
+            
+            if (type === 'normal') {
+                sampleData = ['40', 'M', 'ATA', '140', '289', '0', 'Normal', '172', 'N', '0', 'Up'];
+            } else {
+                sampleData = ['54', 'M', 'NAP', '150', '195', '0', 'Normal', '122', 'N', '0', 'Up'];
+            }
+            
+            inputs.forEach((input, index) => {
+                if (index < sampleData.length) {
+                    input.value = sampleData[index];
+                    input.style.borderColor = '#28a745';
+                }
+            });
+        }
+        
+        // Add sample buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('heart-form');
+            const buttonDiv = document.createElement('div');
+            buttonDiv.style.marginBottom = '15px';
+            buttonDiv.innerHTML = `
+                <button type="button" onclick="fillSample('normal')" style="width: 48%; margin-right: 4%;">📝 Mẫu bình thường</button>
+                <button type="button" onclick="fillSample('risk')" style="width: 48%;">⚠️ Mẫu có nguy cơ</button>
+            `;
+            form.insertBefore(buttonDiv, form.querySelector('button[type="submit"]'));
+        });
+        
+        // Validation
+        document.getElementById('heart-form').addEventListener('submit', function(e) {
+            const inputs = this.querySelectorAll('input[required], select[required]');
+            let allValid = true;
+            
+            inputs.forEach(input => {
+                const value = input.value.trim();
+                if (!value) {
+                    allValid = false;
+                    input.style.borderColor = '#dc3545';
+                } else if (input.type === 'text' && isNaN(value)) {
+                    allValid = false;
+                    input.style.borderColor = '#dc3545';
+                } else {
+                    input.style.borderColor = '#28a745';
+                }
+            });
+            
+            if (!allValid) {
+                e.preventDefault();
+                alert('❌ Vui lòng nhập đầy đủ thông tin hợp lệ!');
+            }
+        });
+    </script>
+</body>
+</html> 

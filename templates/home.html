@@ -1,44 +1,160 @@
-{% extends 'base.html' %}
-{% block title %}Trang chủ - SmartHealth{% endblock %}
-{% block content %}
-<div class="container" style="padding-bottom: 18px;">
-    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 32px; justify-content: space-between;">
-        <div style="flex:1 1 320px; min-width:260px;">
-            <h1 style="font-size:2.1em; margin-bottom:10px;">Chào mừng đến với <span style="color:#667eea;">SmartHealth</span></h1>
-            <p style="font-size:1.15em;">Nền tảng AI giúp bạn kiểm tra nguy cơ mắc bệnh tiểu đường <b>nhanh chóng, miễn phí</b> và <b>bảo mật</b>. Hãy chủ động bảo vệ sức khỏe của bạn và gia đình ngay hôm nay!</p>
-            <a href="/predict"><button style="font-size:1.1em; padding:14px 36px; margin-top:18px;">🔍 Kiểm tra nguy cơ tiểu đường</button></a>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Prediction System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .prediction-cards {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 30px;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .card.diabetes {
+            border-left: 5px solid #667eea;
+        }
+        
+        .card.heart {
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .features {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .features h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .features ul {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Health Prediction System</h1>
+        <p class="subtitle">Hệ thống dự đoán sức khỏe sử dụng Machine Learning</p>
+        
+        <div class="prediction-cards">
+            <a href="/predict" class="card diabetes">
+                <div class="card-icon">🩺</div>
+                <h3>Dự đoán tiểu đường</h3>
+                <p>Phân tích nguy cơ mắc bệnh tiểu đường dựa trên các chỉ số sức khỏe cơ bản như glucose, huyết áp, BMI và các yếu tố khác.</p>
+            </a>
+            
+            <a href="/heart" class="card heart">
+                <div class="card-icon">❤️</div>
+                <h3>Dự đoán bệnh tim</h3>
+                <p>Đánh giá nguy cơ mắc bệnh tim mạch thông qua các chỉ số như huyết áp, cholesterol, ECG và các triệu chứng lâm sàng.</p>
+            </a>
         </div>
-        <div style="flex:1 1 220px; min-width:180px; text-align:center;">
-            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd23?auto=format&fit=crop&w=400&q=80" alt="AI Health" style="max-width:220px; border-radius:16px; box-shadow:0 4px 18px rgba(102,126,234,0.13);">
+        
+        <div class="features">
+            <h3>✨ Tính năng chính</h3>
+            <ul>
+                <li>🎯 <strong>Độ chính xác cao:</strong> Sử dụng các thuật toán Machine Learning tiên tiến</li>
+                <li>⚡ <strong>Kết quả nhanh chóng:</strong> Dự đoán tức thì với giao diện thân thiện</li>
+                <li>📊 <strong>Phân tích chi tiết:</strong> Hiển thị xác suất và độ tin cậy của kết quả</li>
+                <li>🔧 <strong>Debug tools:</strong> Công cụ kiểm tra và test model</li>
+                <li>📱 <strong>Responsive design:</strong> Tương thích với mọi thiết bị</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>💡 <strong>Lưu ý:</strong> Đây là công cụ hỗ trợ chẩn đoán, không thay thế cho tư vấn y tế chuyên nghiệp.</p>
+            <p>
+                <a href="/debug" target="_blank">🔧 Debug Info</a> | 
+                <a href="/test" target="_blank">🧪 Test Cases</a>
+            </p>
         </div>
     </div>
-    <hr style="margin:32px 0 24px 0;">
-    <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
-        <div class="info-box" style="flex:1 1 220px; min-width:200px;">
-            <h3>🤖 Dự đoán bằng AI</h3>
-            <p>Nhập các chỉ số sức khỏe cơ bản, hệ thống AI sẽ phân tích và dự đoán nguy cơ mắc tiểu đường dựa trên dữ liệu y khoa chuẩn quốc tế.</p>
-        </div>
-        <div class="info-box" style="flex:1 1 220px; min-width:200px;">
-            <h3>🔒 Bảo mật & Ẩn danh</h3>
-            <p>Chúng tôi cam kết không lưu trữ thông tin cá nhân. Mọi dữ liệu đều được xử lý bảo mật, chỉ bạn biết kết quả của mình.</p>
-        </div>
-        <div class="info-box" style="flex:1 1 220px; min-width:200px;">
-            <h3>📚 Kiến thức sức khỏe</h3>
-            <p>Khám phá các bài viết, lời khuyên và thông tin hữu ích về phòng ngừa, nhận biết và kiểm soát bệnh tiểu đường.</p>
-        </div>
-    </div>
-    <div style="margin:32px 0 0 0;">
-        <h2 style="text-align:center; color:#764ba2;">Tại sao nên kiểm tra nguy cơ tiểu đường?</h2>
-        <ul style="font-size:1.08em; max-width:600px; margin:0 auto;">
-            <li>Tiểu đường là bệnh lý nguy hiểm nhưng có thể phòng ngừa và kiểm soát tốt nếu phát hiện sớm.</li>
-            <li>Kiểm tra định kỳ giúp bạn chủ động bảo vệ sức khỏe bản thân và gia đình.</li>
-            <li>Phát hiện sớm giúp giảm nguy cơ biến chứng nguy hiểm như tim mạch, thận, mắt...</li>
-        </ul>
-    </div>
-    <div style="text-align:center; margin-top:32px;">
-        <a href="/articles">📚 Xem các bài viết liên quan</a> |
-        <a href="/products">🛒 Sản phẩm hỗ trợ</a> |
-        <a href="/about">📌 Về chúng tôi</a>
-    </div>
-</div>
-{% endblock %} 
+</body>
+</html> 
