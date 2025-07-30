@@ -38,91 +38,75 @@ except Exception as e:
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("home.html")
 
-@app.route("/predict", methods=["POST"])
+@app.route("/articles")
+def articles():
+    return render_template("articles.html")
+
+@app.route("/products")
+def products():
+    return render_template("products.html")
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    return render_template("login.html")
+
+@app.route("/predict", methods=["GET", "POST"])
 def predict():
+    if request.method == "GET":
+        return render_template("index.html", feature_names=feature_order)
     if model is None:
         return render_template("index.html", 
-                             prediction_text="❌ Model chưa được load!")
-    
+                             prediction_text="❌ Model chưa được load!", 
+                             feature_names=feature_order)
     try:
         # Debug: In ra tất cả dữ liệu nhận được
         print("📥 Form data received:")
         for key, value in request.form.items():
-            print(f"  {key}: '{value}'")
-        
-        # Lấy và convert features theo đúng thứ tự
+            print(f"  {key}: {value}")
+        # Lấy features từ form
         features = []
         for i, feature_name in enumerate(feature_order):
             value = request.form.get(feature_name, request.form.get(f'feature_{i}', ''))
             if value == '':
                 value = 0  # Giá trị mặc định nếu bỏ trống
             features.append(float(value))
-        
-        print(f"🔢 Final features ({len(features)}): {features}")
-        
+        print(f"🔢 Parsed features ({len(features)}): {features}")
         # Kiểm tra số lượng features
         if len(features) != 8:
-            raise ValueError(f"Cần 8 giá trị, nhận được {len(features)}")
-        
-        # Validate ranges (optional)
-        validations = [
-            (features[0] >= 0, "Số lần mang thai phải >= 0"),
-            (features[1] > 0, "Nồng độ glucose phải > 0"), 
-            (features[2] > 0, "Huyết áp phải > 0"),
-            (features[4] >= 0, "Insulin phải >= 0"),
-            (features[5] > 0, "BMI phải > 0"),
-            (features[6] >= 0, "Chỉ số di truyền phải >= 0"),
-            (features[7] > 0, "Tuổi phải > 0")
-        ]
-        
-        for is_valid, error_msg in validations:
-            if not is_valid:
-                raise ValueError(error_msg)
-        
+            raise ValueError(f"Expected 8 features, got {len(features)}")
         # Tạo array và predict
         data = np.array([features])
         print(f"📊 Input array shape: {data.shape}")
-        
-        prediction = model.predict(data)[0]
+        prediction = model.predict(data)
         probability = model.predict_proba(data)[0]
-        
-        print(f"🎯 Prediction: {prediction}")
+        print(f"🎯 Prediction: {prediction[0]}")
         print(f"📈 Probability: {probability}")
-        
-        # Format kết quả với emoji và phần trăm
-        if prediction == 1:
-            result = f"🚨 Có nguy cơ mắc tiểu đường (Xác suất: {probability[1]:.1%})"
+        # Format kết quả
+        if prediction[0] == 1:
+            result = f"🚨 Có nguy cơ mắc tiểu đường (Xác suất: {probability[1]:.2%})"
         else:
-            result = f"✅ Không có nguy cơ tiểu đường (Xác suất khỏe mạnh: {probability[0]:.1%})"
-        
-        # Thêm thông tin chi tiết
-        result += f"\n\n📊 Chi tiết dự đoán:"
-        result += f"\n• Xác suất không mắc: {probability[0]:.1%}"
-        result += f"\n• Xác suất mắc bệnh: {probability[1]:.1%}"
-        
-        # Highlight các yếu tố quan trọng nếu có feature_importances_
+            result = f"✅ Không có nguy cơ tiểu đường (Xác suất khỏe mạnh: {probability[0]:.2%})"
+        # Debug: In ra feature importance
         if hasattr(model, 'feature_importances_'):
-            important_features = []
-            for i, (name, value, importance) in enumerate(zip(feature_order, features, model.feature_importances_)):
-                if importance > 0.1:  # Chỉ hiển thị features quan trọng
-                    important_features.append(f"• {name}: {value} (tầm quan trọng: {importance:.1%})")
-            
-            if important_features:
-                result += f"\n\n🔍 Các yếu tố quan trọng:\n" + "\n".join(important_features[:3])
-        
+            print("🔍 Feature values vs importance:")
+            for name, value, importance in zip(feature_order, features, model.feature_importances_):
+                print(f"  {name}: {value} (importance: {importance:.4f})")
     except ValueError as ve:
         print(f"❌ ValueError: {ve}")
         result = f"❌ Lỗi dữ liệu: {str(ve)}"
     except Exception as e:
         print(f"❌ Unexpected error: {e}")
         print(f"❌ Error type: {type(e)}")
-        import traceback
-        traceback.print_exc()
-        result = f"❌ Lỗi hệ thống: {str(e)}"
-    
-    return render_template("index.html", prediction_text=result)
+        result = f"❌ Lỗi không xác định: {str(e)}"
+    return render_template("index.html", 
+                         prediction_text=result, 
+                         feature_names=feature_order)
 
 @app.route("/debug")
 def debug():

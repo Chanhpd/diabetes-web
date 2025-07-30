@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}SmartHealth - Dự đoán Tiểu Đường bằng AI{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2966/2966484.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-area">
+            <img src="https://cdn-icons-png.flaticon.com/512/2966/2966484.png" alt="logo" class="logo">
+            <span class="site-title">SmartHealth</span>
+        </div>
+        <nav class="main-nav">
+            <a href="/">Trang chủ</a>
+            <a href="/articles">Bài viết</a>
+            <a href="/products">Sản phẩm</a>
+            <a href="/about">Về chúng tôi</a>
+            <a href="/login">Đăng nhập</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="main-footer">
+        <div>
+            <strong>SmartHealth</strong> &copy; 2024. All rights reserved.<br>
+            Liên hệ: support@smarthealth.com | Hotline: 0123 456 789
+        </div>
+    </footer>
+</body>
+</html> 

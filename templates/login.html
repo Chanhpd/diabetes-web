@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Đăng nhập - SmartHealth{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Đăng nhập</h1>
+    <form method="post">
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+        <label>Mật khẩu:</label><br>
+        <input type="password" name="password" required><br><br>
+        <button type="submit">Đăng nhập</button>
+    </form>
+    <div style="text-align:center; margin-top:20px;">
+        <a href="/">⬅️ Về trang chủ</a>
+    </div>
+</div>
+{% endblock %} 

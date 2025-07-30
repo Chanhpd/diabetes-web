@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Trang chủ - SmartHealth{% endblock %}
+{% block content %}
+<div class="container" style="padding-bottom: 18px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 32px; justify-content: space-between;">
+        <div style="flex:1 1 320px; min-width:260px;">
+            <h1 style="font-size:2.1em; margin-bottom:10px;">Chào mừng đến với <span style="color:#667eea;">SmartHealth</span></h1>
+            <p style="font-size:1.15em;">Nền tảng AI giúp bạn kiểm tra nguy cơ mắc bệnh tiểu đường <b>nhanh chóng, miễn phí</b> và <b>bảo mật</b>. Hãy chủ động bảo vệ sức khỏe của bạn và gia đình ngay hôm nay!</p>
+            <a href="/predict"><button style="font-size:1.1em; padding:14px 36px; margin-top:18px;">🔍 Kiểm tra nguy cơ tiểu đường</button></a>
+        </div>
+        <div style="flex:1 1 220px; min-width:180px; text-align:center;">
+            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd23?auto=format&fit=crop&w=400&q=80" alt="AI Health" style="max-width:220px; border-radius:16px; box-shadow:0 4px 18px rgba(102,126,234,0.13);">
+        </div>
+    </div>
+    <hr style="margin:32px 0 24px 0;">
+    <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
+        <div class="info-box" style="flex:1 1 220px; min-width:200px;">
+            <h3>🤖 Dự đoán bằng AI</h3>
+            <p>Nhập các chỉ số sức khỏe cơ bản, hệ thống AI sẽ phân tích và dự đoán nguy cơ mắc tiểu đường dựa trên dữ liệu y khoa chuẩn quốc tế.</p>
+        </div>
+        <div class="info-box" style="flex:1 1 220px; min-width:200px;">
+            <h3>🔒 Bảo mật & Ẩn danh</h3>
+            <p>Chúng tôi cam kết không lưu trữ thông tin cá nhân. Mọi dữ liệu đều được xử lý bảo mật, chỉ bạn biết kết quả của mình.</p>
+        </div>
+        <div class="info-box" style="flex:1 1 220px; min-width:200px;">
+            <h3>📚 Kiến thức sức khỏe</h3>
+            <p>Khám phá các bài viết, lời khuyên và thông tin hữu ích về phòng ngừa, nhận biết và kiểm soát bệnh tiểu đường.</p>
+        </div>
+    </div>
+    <div style="margin:32px 0 0 0;">
+        <h2 style="text-align:center; color:#764ba2;">Tại sao nên kiểm tra nguy cơ tiểu đường?</h2>
+        <ul style="font-size:1.08em; max-width:600px; margin:0 auto;">
+            <li>Tiểu đường là bệnh lý nguy hiểm nhưng có thể phòng ngừa và kiểm soát tốt nếu phát hiện sớm.</li>
+            <li>Kiểm tra định kỳ giúp bạn chủ động bảo vệ sức khỏe bản thân và gia đình.</li>
+            <li>Phát hiện sớm giúp giảm nguy cơ biến chứng nguy hiểm như tim mạch, thận, mắt...</li>
+        </ul>
+    </div>
+    <div style="text-align:center; margin-top:32px;">
+        <a href="/articles">📚 Xem các bài viết liên quan</a> |
+        <a href="/products">🛒 Sản phẩm hỗ trợ</a> |
+        <a href="/about">📌 Về chúng tôi</a>
+    </div>
+</div>
+{% endblock %} 
