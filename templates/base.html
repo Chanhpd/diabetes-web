@@ -52,17 +52,18 @@
     /* Header Styles */
     .header {
       background: var(--white-color);
-      box-shadow: var(--shadow);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
     .topbar {
-      background: var(--gradient);
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #a8edea 100%);
       color: var(--white-color);
-      padding: 8px 0;
-      font-size: 14px;
+      padding: 6px 0;
+      font-size: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
     .topbar .container {
@@ -81,32 +82,49 @@
     }
 
     .contact-info i {
-      margin-right: 5px;
+      margin-right: 6px;
+      font-size: 14px;
     }
 
     .contact-info a {
       color: var(--white-color);
       text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.3s;
+    }
+
+    .contact-info a:hover {
+      opacity: 0.8;
     }
 
     .social-links {
       display: flex;
-      gap: 15px;
+      gap: 12px;
     }
 
     .social-links a {
       color: var(--white-color);
       text-decoration: none;
-      transition: opacity 0.3s;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      padding: 4px;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .social-links a:hover {
-      opacity: 0.8;
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
     }
 
     .branding {
-      padding: 15px 0;
+      padding: 12px 0;
       background: var(--white-color);
+      border-bottom: 1px solid #f0f0f0;
     }
 
     .branding .container {
@@ -123,22 +141,49 @@
       align-items: center;
       text-decoration: none;
       color: var(--primary-color);
+      transition: transform 0.3s ease;
     }
 
-    .logo img {
-      width: 40px;
-      height: 40px;
-      margin-right: 10px;
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      margin-right: 12px;
+      background: var(--gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .logo-icon i {
+      font-size: 20px;
+      color: white;
     }
 
     .sitename {
-      font-size: 1.8em;
+      font-size: 1.6em;
       font-weight: 700;
       margin: 0;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      line-height: 1.1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sitename-subtitle {
+      font-size: 0.45em;
+      font-weight: 400;
+      opacity: 0.8;
+      margin-top: -2px;
     }
 
     /* Navigation */
@@ -152,30 +197,59 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      gap: 30px;
+      gap: 3px;
+      align-items: center;
     }
 
     .navmenu a {
       text-decoration: none;
       color: var(--dark-color);
       font-weight: 500;
-      padding: 10px 15px;
-      border-radius: 8px;
+      padding: 8px 14px;
+      border-radius: 20px;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .navmenu a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .navmenu a:hover::before,
+    .navmenu a.active::before {
+      left: 0;
     }
 
     .navmenu a:hover,
     .navmenu a.active {
-      background: var(--gradient);
       color: var(--white-color);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
     }
 
     .navmenu a i {
       font-size: 1.1em;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .navmenu a:hover i,
+    .navmenu a.active i {
+      transform: scale(1.1);
     }
 
     .mobile-nav-toggle {
@@ -185,6 +259,140 @@
       font-size: 1.5em;
       color: var(--primary-color);
       cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav-toggle:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .navmenu ul {
+        gap: 2px;
+      }
+      
+      .navmenu a {
+        padding: 7px 12px;
+        font-size: 13px;
+      }
+      
+      .sitename {
+        font-size: 1.5em;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .topbar .container {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .contact-info {
+        gap: 15px;
+        font-size: 12px;
+      }
+      
+      .social-links {
+        gap: 12px;
+      }
+      
+      .branding .container {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+      
+      .logo {
+        justify-content: center;
+      }
+      
+      .navmenu {
+        width: 100%;
+        position: relative;
+      }
+      
+      .navmenu ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white-color);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        padding: 20px;
+        gap: 10px;
+        z-index: 1000;
+      }
+      
+      .navmenu.show ul {
+        display: flex;
+      }
+      
+      .navmenu a {
+        justify-content: center;
+        border-radius: 8px;
+      }
+      
+      .mobile-nav-toggle {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      
+      .sitename {
+        font-size: 1.5em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topbar {
+        padding: 6px 0;
+        font-size: 11px;
+      }
+      
+      .contact-info {
+        gap: 8px;
+      }
+      
+      .social-links {
+        gap: 6px;
+      }
+      
+      .social-links a {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+      }
+      
+      .branding {
+        padding: 10px 0;
+      }
+      
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+      }
+      
+      .logo-icon i {
+        font-size: 16px;
+      }
+      
+      .sitename {
+        font-size: 1.2em;
+      }
+      
+      .navmenu a {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
     }
 
     /* Main Content */
@@ -530,8 +738,13 @@
     <div class="branding">
       <div class="container">
         <a href="/" class="logo">
-          <img src="https://cdn-icons-png.flaticon.com/512/2966/2966484.png" alt="Health Prediction System">
-          <h1 class="sitename">Health Prediction System</h1>
+          <div class="logo-icon">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h1 class="sitename">
+            Health Prediction
+            <span class="sitename-subtitle">System</span>
+          </h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
