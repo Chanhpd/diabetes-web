@@ -1,0 +1,143 @@
+📊 Thông tin về dataset:
+Kích thước: (918, 12)
+
+Tên các cột:
+['Age', 'Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope', 'HeartDisease']
+
+5 dòng đầu tiên:
+   Age Sex ChestPainType  RestingBP  Cholesterol  FastingBS RestingECG  MaxHR  \
+0   40   M           ATA        140          289          0     Normal    172   
+1   49   F           NAP        160          180          0     Normal    156   
+2   37   M           ATA        130          283          0         ST     98   
+3   48   F           ASY        138          214          0     Normal    108   
+4   54   M           NAP        150          195          0     Normal    122   
+
+  ExerciseAngina  Oldpeak ST_Slope  HeartDisease  
+0              N      0.0       Up             0  
+1              N      1.0     Flat             1  
+2              N      0.0       Up             0  
+3              Y      1.5     Flat             1  
+4              N      0.0       Up             0  
+
+📋 Kiểu dữ liệu của các cột:
+Age                 int64
+Sex                object
+ChestPainType      object
+RestingBP           int64
+Cholesterol         int64
+FastingBS           int64
+RestingECG         object
+MaxHR               int64
+ExerciseAngina     object
+Oldpeak           float64
+ST_Slope           object
+HeartDisease        int64
+dtype: object
+
+🔍 Kiểm tra dữ liệu categorical:
+Sex: ['M' 'F']
+ChestPainType: ['ATA' 'NAP' 'ASY' 'TA']
+RestingECG: ['Normal' 'ST' 'LVH']
+ExerciseAngina: ['N' 'Y']
+ST_Slope: ['Up' 'Flat' 'Down']
+
+🎯 Cột target được xác định: 'HeartDisease'
+✅ Đã encode cột 'Sex': {'F': np.int64(0), 'M': np.int64(1)}
+✅ Đã encode cột 'ChestPainType': {'ASY': np.int64(0), 'ATA': np.int64(1), 'NAP': np.int64(2), 'TA': np.int64(3)}
+✅ Đã encode cột 'RestingECG': {'LVH': np.int64(0), 'Normal': np.int64(1), 'ST': np.int64(2)}
+✅ Đã encode cột 'ExerciseAngina': {'N': np.int64(0), 'Y': np.int64(1)}
+✅ Đã encode cột 'ST_Slope': {'Down': np.int64(0), 'Flat': np.int64(1), 'Up': np.int64(2)}
+
+📝 Các cột categorical đã được xử lý: ['Sex', 'ChestPainType', 'RestingECG', 'ExerciseAngina', 'ST_Slope']
+
+📈 Kích thước dữ liệu sau khi xử lý:
+X (features): (918, 11)
+y (target): (918,)
+Phân bố target: 
+HeartDisease
+1    508
+0    410
+Name: count, dtype: int64
+
+🔍 Kiểm tra dữ liệu sau xử lý:
+Kiểu dữ liệu X:
+Age                 int64
+Sex                 int64
+ChestPainType       int64
+RestingBP           int64
+Cholesterol         int64
+FastingBS           int64
+RestingECG          int64
+MaxHR               int64
+ExerciseAngina      int64
+Oldpeak           float64
+ST_Slope            int64
+dtype: object
+
+5 dòng đầu của X:
+   Age  Sex  ChestPainType  RestingBP  Cholesterol  FastingBS  RestingECG  \
+0   40    1              1        140          289          0           1   
+1   49    0              2        160          180          0           1   
+2   37    1              1        130          283          0           2   
+3   48    0              0        138          214          0           1   
+4   54    1              2        150          195          0           1   
+
+   MaxHR  ExerciseAngina  Oldpeak  ST_Slope  
+0    172               0      0.0         2  
+1    156               0      1.0         1  
+2     98               0      0.0         2  
+3    108               1      1.5         1  
+4    122               0      0.0         2  
+
+📂 Chia dữ liệu:
+Training set: 734 samples
+Test set: 184 samples
+
+🤖 Đang huấn luyện model...
+
+📊 Kết quả đánh giá:
+Accuracy: 0.8859
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.85      0.87        82
+           1       0.89      0.91      0.90       102
+
+    accuracy                           0.89       184
+   macro avg       0.89      0.88      0.88       184
+weighted avg       0.89      0.89      0.89       184
+
+
+✅ Đã train và lưu model thành công!
+📁 Model được lưu tại: heart_disease_model.pkl
+📁 Feature names được lưu tại: feature_names.pkl
+📁 Label encoders được lưu tại: label_encoders.pkl
+
+🔍 Độ quan trọng của các features:
+ST_Slope: 0.2581
+ChestPainType: 0.1171
+MaxHR: 0.1163
+Oldpeak: 0.1103
+Cholesterol: 0.1074
+ExerciseAngina: 0.0841
+Age: 0.0717
+RestingBP: 0.0618
+Sex: 0.0291
+RestingECG: 0.0234
+FastingBS: 0.0208
+
+🧪 Test model với một sample ngẫu nhiên:
+Input features: [ 46.    1.    0.  115.    0.    0.    1.  113.    1.    1.5   1. ]
+Prediction: 1 (Có bệnh tim)
+Actual: 1 (Có bệnh tim)
+Probability [Không bệnh, Có bệnh]: [0.0475, 0.9525]
+Correct: ✅
+
+🎉 Hoàn thành!
+
+📋 Hướng dẫn sử dụng hàm predict_heart_disease:
+Ví dụ: predict_heart_disease(40, 'M', 'ATA', 140, 289, 0, 'Normal', 172, 'N', 0, 'Up')
+
+🧪 Test hàm predict với dữ liệu mẫu:
+Kết quả dự đoán: {'prediction': np.int64(0), 'prediction_text': 'Không bệnh tim', 'probability_no_disease': np.float64(0.9982087167217526), 'probability_disease': np.float64(0.0017912832782474852)}

@@ -7,8 +7,19 @@ app = Flask(__name__)
 
 # Load model
 try:
-    model = joblib.load("diabetes_model.pkl")
+    model = joblib.load("diabetes/diabetes_model.pkl")
     print("✅ Model loaded successfully!")
+    
+    # Load feature names from file
+    try:
+        feature_names = joblib.load("diabetes/feature_names.pkl")
+        print(f"✅ Feature names loaded: {feature_names}")
+    except:
+        print("⚠️ Could not load feature_names.pkl, using default names")
+        feature_names = [
+            'Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 
+            'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'
+        ]
     
     # Mapping từ tên field trong HTML sang tên chuẩn
     field_mapping = {
@@ -23,10 +34,7 @@ try:
     }
     
     # Thứ tự features cho model (theo thứ tự training)
-    feature_order = [
-        'Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 
-        'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'
-    ]
+    feature_order = feature_names
     
     print(f"📊 Expected features: {feature_order}")
     
