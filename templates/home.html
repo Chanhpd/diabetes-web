@@ -1,160 +1,62 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Prediction System</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
+{% extends 'base.html' %}
+
+{% block title %}Health Prediction System - Trang chủ{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 40px 0;">
+    <h1 style="font-size: 2.5em; color: white; margin-bottom: 20px;">🏥 Health Prediction System</h1>
+    <p style="font-size: 1.2em; color: white; margin-bottom: 40px;">Hệ thống dự đoán sức khỏe sử dụng Machine Learning</p>
+    
+    <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
+        <a href="/predict" class="prediction-card diabetes">
+            <div style="font-size: 3em; margin-bottom: 20px;">🩺</div>
+            <h3 style="color: #333; margin-bottom: 15px; font-size: 1.5em;">Dự đoán tiểu đường</h3>
+            <p style="color: #666; line-height: 1.6;">Phân tích nguy cơ mắc bệnh tiểu đường dựa trên các chỉ số sức khỏe cơ bản như glucose, huyết áp, BMI và các yếu tố khác.</p>
+        </a>
         
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-        }
-        
-        .subtitle {
-            color: #666;
-            margin-bottom: 40px;
-            font-size: 1.2em;
-        }
-        
-        .prediction-cards {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 40px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            padding: 30px;
-            width: 300px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        
-        .card.diabetes {
-            border-left: 5px solid #667eea;
-        }
-        
-        .card.heart {
-            border-left: 5px solid #ff6b6b;
-        }
-        
-        .card-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-        
-        .card h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-        
-        .card p {
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .features {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-        
-        .features h3 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        .features ul {
-            text-align: left;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .features li {
-            margin-bottom: 10px;
-            color: #555;
-        }
-        
-        .footer {
-            margin-top: 40px;
-            color: #666;
-            font-size: 0.9em;
-        }
-        
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🏥 Health Prediction System</h1>
-        <p class="subtitle">Hệ thống dự đoán sức khỏe sử dụng Machine Learning</p>
-        
-        <div class="prediction-cards">
-            <a href="/predict" class="card diabetes">
-                <div class="card-icon">🩺</div>
-                <h3>Dự đoán tiểu đường</h3>
-                <p>Phân tích nguy cơ mắc bệnh tiểu đường dựa trên các chỉ số sức khỏe cơ bản như glucose, huyết áp, BMI và các yếu tố khác.</p>
-            </a>
-            
-            <a href="/heart" class="card heart">
-                <div class="card-icon">❤️</div>
-                <h3>Dự đoán bệnh tim</h3>
-                <p>Đánh giá nguy cơ mắc bệnh tim mạch thông qua các chỉ số như huyết áp, cholesterol, ECG và các triệu chứng lâm sàng.</p>
-            </a>
-        </div>
-        
-        <div class="features">
-            <h3>✨ Tính năng chính</h3>
-            <ul>
-                <li>🎯 <strong>Độ chính xác cao:</strong> Sử dụng các thuật toán Machine Learning tiên tiến</li>
-                <li>⚡ <strong>Kết quả nhanh chóng:</strong> Dự đoán tức thì với giao diện thân thiện</li>
-                <li>📊 <strong>Phân tích chi tiết:</strong> Hiển thị xác suất và độ tin cậy của kết quả</li>
-                <li>🔧 <strong>Debug tools:</strong> Công cụ kiểm tra và test model</li>
-                <li>📱 <strong>Responsive design:</strong> Tương thích với mọi thiết bị</li>
-            </ul>
-        </div>
-        
-        <div class="footer">
-            <p>💡 <strong>Lưu ý:</strong> Đây là công cụ hỗ trợ chẩn đoán, không thay thế cho tư vấn y tế chuyên nghiệp.</p>
-            <p>
-                <a href="/debug" target="_blank">🔧 Debug Info</a> | 
-                <a href="/test" target="_blank">🧪 Test Cases</a>
-            </p>
-        </div>
+        <a href="/heart" class="prediction-card heart">
+            <div style="font-size: 3em; margin-bottom: 20px;">❤️</div>
+            <h3 style="color: #333; margin-bottom: 15px; font-size: 1.5em;">Dự đoán bệnh tim</h3>
+            <p style="color: #666; line-height: 1.6;">Đánh giá nguy cơ mắc bệnh tim mạch thông qua các chỉ số như huyết áp, cholesterol, ECG và các triệu chứng lâm sàng.</p>
+        </a>
     </div>
-</body>
-</html> 
+    
+    <div style="background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 15px; max-width: 800px; margin: 0 auto;">
+        <h3 style="color: #333; margin-bottom: 20px;">✨ Tính năng chính</h3>
+        <ul style="text-align: left; max-width: 600px; margin: 0 auto; color: #555;">
+            <li style="margin-bottom: 10px;">🎯 <strong>Độ chính xác cao:</strong> Sử dụng các thuật toán Machine Learning tiên tiến</li>
+            <li style="margin-bottom: 10px;">⚡ <strong>Kết quả nhanh chóng:</strong> Dự đoán tức thì với giao diện thân thiện</li>
+            <li style="margin-bottom: 10px;">📊 <strong>Phân tích chi tiết:</strong> Hiển thị xác suất và độ tin cậy của kết quả</li>
+            <li style="margin-bottom: 10px;">🔧 <strong>Debug tools:</strong> Công cụ kiểm tra và test model</li>
+            <li style="margin-bottom: 10px;">📱 <strong>Responsive design:</strong> Tương thích với mọi thiết bị</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+.prediction-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.prediction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.prediction-card.diabetes {
+    border-left: 5px solid #667eea;
+}
+
+.prediction-card.heart {
+    border-left: 5px solid #ff6b6b;
+}
+</style>
+{% endblock %} 

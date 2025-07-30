@@ -1,17 +1,59 @@
 {% extends 'base.html' %}
-{% block title %}Về chúng tôi - SmartHealth{% endblock %}
+{% block title %}Về chúng tôi - Health Prediction System{% endblock %}
 {% block content %}
-<div class="container">
-    <h1>Về chúng tôi</h1>
-    <p>SmartHealth là một dự án ứng dụng AI giúp người dùng dễ dàng kiểm tra nguy cơ mắc bệnh tiểu đường.</p>
-    <p>Được xây dựng bởi sinh viên đam mê công nghệ và y tế.</p>
-    <h3>Liên hệ:</h3>
-    <ul>
-      <li>Email: support@smarthealth.com</li>
-      <li>Hotline: 0123 456 789</li>
-    </ul>
-    <div style="text-align:center; margin-top:20px;">
-        <a href="/">⬅️ Về trang chủ</a>
+<div class="form-container" style="max-width: 800px;">
+    <h2 class="form-title">📌 Về chúng tôi</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966484.png" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 20px;">
+        <h3 style="color: #667eea; margin-bottom: 15px;">Health Prediction System</h3>
+        <p style="color: #666; font-size: 1.1em; line-height: 1.6;">
+            Hệ thống dự đoán sức khỏe thông minh sử dụng công nghệ Machine Learning tiên tiến
+        </p>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 25px;">
+        <h4 style="color: #333; margin-bottom: 15px;">🎯 Sứ mệnh</h4>
+        <p style="color: #555; line-height: 1.6;">
+            Chúng tôi cam kết mang đến giải pháp công nghệ tiên tiến giúp mọi người dễ dàng kiểm tra 
+            và đánh giá nguy cơ sức khỏe, từ đó có những quyết định chăm sóc sức khỏe thông minh và kịp thời.
+        </p>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 25px;">
+        <h4 style="color: #333; margin-bottom: 15px;">💡 Tầm nhìn</h4>
+        <p style="color: #555; line-height: 1.6;">
+            Trở thành nền tảng công nghệ y tế hàng đầu, ứng dụng AI/ML để cung cấp các giải pháp 
+            dự đoán sức khỏe chính xác, dễ tiếp cận và tin cậy cho mọi người.
+        </p>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 25px;">
+        <h4 style="color: #333; margin-bottom: 15px;">🔬 Công nghệ</h4>
+        <ul style="color: #555; line-height: 1.6; text-align: left;">
+            <li><strong>Machine Learning:</strong> Sử dụng các thuật toán Random Forest, SVM</li>
+            <li><strong>Web Development:</strong> Flask, HTML5, CSS3, JavaScript</li>
+            <li><strong>Data Processing:</strong> Pandas, NumPy, Scikit-learn</li>
+            <li><strong>UI/UX:</strong> Responsive design, modern interface</li>
+        </ul>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 25px;">
+        <h4 style="color: #333; margin-bottom: 15px;">📞 Liên hệ</h4>
+        <div style="text-align: left; color: #555;">
+            <p><strong>📧 Email:</strong> support@healthprediction.com</p>
+            <p><strong>📱 Hotline:</strong> 0123 456 789</p>
+            <p><strong>🏢 Địa chỉ:</strong> Trường Đại học Công nghệ Thông tin</p>
+            <p><strong>🌐 Website:</strong> www.healthprediction.com</p>
+        </div>
+    </div>
+
+    <div style="background: #e8f4fd; padding: 20px; border-radius: 10px; border-left: 5px solid #667eea;">
+        <h4 style="color: #333; margin-bottom: 10px;">⚠️ Lưu ý quan trọng</h4>
+        <p style="color: #555; margin: 0; font-style: italic;">
+            Đây là công cụ hỗ trợ chẩn đoán sử dụng AI, không thay thế cho tư vấn y tế chuyên nghiệp. 
+            Vui lòng tham khảo ý kiến bác sĩ để có chẩn đoán chính xác.
+        </p>
     </div>
 </div>
 {% endblock %} 

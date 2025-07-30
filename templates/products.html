@@ -1,20 +1,105 @@
 {% extends 'base.html' %}
-{% block title %}Sản phẩm - SmartHealth{% endblock %}
+{% block title %}Sản phẩm - Health Prediction System{% endblock %}
 {% block content %}
-<div class="container">
-    <h1>Sản phẩm hỗ trợ người tiểu đường</h1>
-    <div class="info-box">
-      <h3>Máy đo đường huyết Omron</h3>
-      <p>Giá: 1.200.000đ</p>
-      <button>Mua ngay</button>
+<div class="form-container" style="max-width: 1000px;">
+    <h2 class="form-title">🛒 Sản phẩm hỗ trợ sức khỏe</h2>
+    
+    <div style="margin-bottom: 30px;">
+        <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">🩺 Sản phẩm cho người tiểu đường</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                <img src="https://images.unsplash.com/photo-1550572017-edd951aa4fdc?auto=format&fit=crop&w=200&q=80" alt="Máy đo đường huyết" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #333; margin-bottom: 10px;">Máy đo đường huyết Omron</h4>
+                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
+                    Máy đo đường huyết chính xác, dễ sử dụng với bộ nhớ lưu trữ 500 kết quả đo
+                </p>
+                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
+                    ₫1,200,000
+                </div>
+                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=200&q=80" alt="Thực phẩm chức năng" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #333; margin-bottom: 10px;">Thực phẩm chức năng kiểm soát đường huyết</h4>
+                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
+                    Hỗ trợ kiểm soát đường huyết, giảm cholesterol với thành phần tự nhiên
+                </p>
+                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
+                    ₫650,000
+                </div>
+                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=200&q=80" alt="Máy đo huyết áp" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #333; margin-bottom: 10px;">Máy đo huyết áp tự động</h4>
+                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
+                    Máy đo huyết áp điện tử chính xác, có cảnh báo rối loạn nhịp tim
+                </p>
+                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
+                    ₫850,000
+                </div>
+                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
+            </div>
+        </div>
     </div>
-    <div class="info-box">
-      <h3>Thực phẩm chức năng hỗ trợ kiểm soát đường huyết</h3>
-      <p>Giá: 650.000đ</p>
-      <button>Mua ngay</button>
+
+    <div style="margin-bottom: 30px;">
+        <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">❤️ Sản phẩm cho người bệnh tim</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=200&q=80" alt="Máy đo nhịp tim" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #333; margin-bottom: 10px;">Máy đo nhịp tim đeo tay</h4>
+                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
+                    Đồng hồ thông minh theo dõi nhịp tim 24/7, cảnh báo bất thường
+                </p>
+                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
+                    ₫2,500,000
+                </div>
+                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=200&q=80" alt="Omega-3" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #333; margin-bottom: 10px;">Omega-3 hỗ trợ tim mạch</h4>
+                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
+                    Viên uống Omega-3 cao cấp, hỗ trợ sức khỏe tim mạch và giảm cholesterol
+                </p>
+                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
+                    ₫450,000
+                </div>
+                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                <img src="https://images.unsplash.com/photo-1550572017-edd951aa4fdc?auto=format&fit=crop&w=200&q=80" alt="Máy đo cholesterol" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #333; margin-bottom: 10px;">Máy đo cholesterol tại nhà</h4>
+                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
+                    Thiết bị đo cholesterol nhanh chóng, kết quả chính xác trong 2 phút
+                </p>
+                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
+                    ₫1,800,000
+                </div>
+                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
+            </div>
+        </div>
     </div>
-    <div style="text-align:center; margin-top:20px;">
-        <a href="/">⬅️ Về trang chủ</a>
+
+    <div style="background: #e8f4fd; padding: 20px; border-radius: 10px; border-left: 5px solid #667eea;">
+        <h4 style="color: #333; margin-bottom: 15px;">🎁 Ưu đãi đặc biệt</h4>
+        <ul style="color: #555; line-height: 1.6; margin: 0;">
+            <li>🚚 <strong>Miễn phí vận chuyển</strong> cho đơn hàng trên 500,000đ</li>
+            <li>🔄 <strong>Đổi trả miễn phí</strong> trong 30 ngày</li>
+            <li>📞 <strong>Tư vấn miễn phí</strong> từ chuyên gia y tế</li>
+            <li>🎯 <strong>Bảo hành chính hãng</strong> 12 tháng</li>
+        </ul>
+    </div>
+
+    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin-top: 20px;">
+        <p style="color: #856404; margin: 0; font-size: 14px; text-align: center;">
+            <strong>💡 Lưu ý:</strong> Sản phẩm chỉ mang tính chất hỗ trợ, không thay thế thuốc điều trị. Vui lòng tham khảo ý kiến bác sĩ trước khi sử dụng.
+        </p>
     </div>
 </div>
 {% endblock %} 

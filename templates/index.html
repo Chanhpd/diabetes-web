@@ -1,231 +1,139 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dự đoán tiểu đường</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        
-        input[type="text"]:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-        
-        input[type="text"]:valid {
-            border-color: #28a745;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            width: 100%;
-            transition: transform 0.2s;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-        }
-        
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-            white-space: pre-line;
-        }
-        
-        .error {
-            border-left-color: #dc3545;
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .success {
-            border-left-color: #28a745;
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .warning {
-            border-left-color: #ffc107;
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        .links {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .links a {
-            color: #667eea;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        
-        .sample-data {
-            background: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            font-size: 12px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>🩺 Dự đoán nguy cơ tiểu đường</h2>
-        
-        <form action="/predict" method="post" id="prediction-form">
-            <div class="form-group">
-                <input type="text" name="Pregnancies" placeholder="Số lần mang thai (VD: 1)" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" name="Glucose" placeholder="Nồng độ glucose (VD: 85)" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" name="BloodPressure" placeholder="Huyết áp (VD: 66)" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" name="SkinThickness" placeholder="Độ dày da (VD: 29)" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" name="Insulin" placeholder="Insulin (VD: 0)" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" name="BMI" placeholder="Chỉ số BMI (VD: 26.6)" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" name="DiabetesPedigreeFunction" placeholder="Chỉ số di truyền (VD: 0.351)" required>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" name="Age" placeholder="Tuổi (VD: 31)" required>
-            </div>
-            
-            <button type="submit">🔍 Dự đoán</button>
-        </form>
+{% extends 'base.html' %}
 
-        {% if prediction_text %}
-        <div class="result 
-            {% if 'Lỗi' in prediction_text %}error
-            {% elif 'nguy cơ mắc' in prediction_text %}warning  
-            {% else %}success{% endif %}">
-            <strong>Kết quả:</strong> {{ prediction_text }}
-        </div>
-        {% endif %}
-        
-        <div class="sample-data">
-            <strong>📝 Dữ liệu mẫu để test:</strong><br>
-            <strong>Trường hợp bình thường:</strong> 1, 85, 66, 29, 0, 26.6, 0.351, 31<br>
-            <strong>Trường hợp có nguy cơ:</strong> 8, 183, 64, 0, 0, 23.3, 0.672, 32
+{% block title %}Dự đoán tiểu đường - Health Prediction System{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">🩺 Dự đoán nguy cơ tiểu đường</h2>
+    
+    <form action="/predict" method="post" id="prediction-form">
+        <div class="form-group">
+            <input type="text" name="Pregnancies" placeholder="Số lần mang thai (VD: 1)" required>
         </div>
         
-        <div class="links">
-            <a href="/heart">❤️ Heart Disease</a> |
-            <a href="/debug" target="_blank">🔧 Debug Info</a> |
-            <a href="/test" target="_blank">🧪 Test Cases</a>
+        <div class="form-group">
+            <input type="text" name="Glucose" placeholder="Nồng độ glucose (VD: 85)" required>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="BloodPressure" placeholder="Huyết áp (VD: 66)" required>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="SkinThickness" placeholder="Độ dày da (VD: 29)" required>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="Insulin" placeholder="Insulin (VD: 0)" required>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="BMI" placeholder="Chỉ số BMI (VD: 26.6)" required>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="DiabetesPedigreeFunction" placeholder="Chỉ số di truyền (VD: 0.351)" required>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="Age" placeholder="Tuổi (VD: 31)" required>
+        </div>
+        
+        <button type="submit">🔍 Dự đoán</button>
+    </form>
+
+    {% if prediction_text %}
+    <div class="result 
+        {% if 'Lỗi' in prediction_text %}error
+        {% elif 'nguy cơ mắc' in prediction_text %}warning  
+        {% else %}success{% endif %}">
+        <strong>Kết quả:</strong> {{ prediction_text }}
+    </div>
+    {% endif %}
+    
+    <div class="sample-data">
+        <strong>📝 Dữ liệu mẫu để test:</strong><br>
+        <strong>Trường hợp bình thường:</strong> 1, 85, 66, 29, 0, 26.6, 0.351, 31<br>
+        <strong>Trường hợp có nguy cơ:</strong> 8, 183, 64, 0, 0, 23.3, 0.672, 32
+    </div>
+    
+    <div style="background: #e8f4fd; padding: 20px; border-radius: 10px; border-left: 5px solid #667eea; margin-top: 20px;">
+        <h4 style="color: #333; margin-bottom: 15px;">🔬 Công nghệ AI/ML</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="text-align: center;">
+                <div style="font-size: 2em; margin-bottom: 10px;">🎯</div>
+                <strong style="color: #333;">Độ chính xác cao</strong>
+                <p style="color: #666; font-size: 0.9em; margin: 5px 0 0 0;">Sử dụng thuật toán Random Forest</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 2em; margin-bottom: 10px;">⚡</div>
+                <strong style="color: #333;">Kết quả nhanh</strong>
+                <p style="color: #666; font-size: 0.9em; margin: 5px 0 0 0;">Dự đoán trong vài giây</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
+                <strong style="color: #333;">Phân tích chi tiết</strong>
+                <p style="color: #666; font-size: 0.9em; margin: 5px 0 0 0;">Xác suất và độ tin cậy</p>
+            </div>
         </div>
     </div>
     
-    <script>
-        // Auto-fill sample data
-        function fillSample(type) {
-            const inputs = document.querySelectorAll('input[type="text"]');
-            let sampleData;
-            
-            if (type === 'normal') {
-                sampleData = [1, 85, 66, 29, 0, 26.6, 0.351, 31];
-            } else {
-                sampleData = [8, 183, 64, 0, 0, 23.3, 0.672, 32];
-            }
-            
-            inputs.forEach((input, index) => {
-                input.value = sampleData[index];
-                input.style.borderColor = '#28a745';
-            });
+    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin-top: 15px;">
+        <p style="color: #856404; margin: 0; font-size: 14px; text-align: center;">
+            <strong>💡 Lưu ý:</strong> Kết quả dự đoán chỉ mang tính chất tham khảo. Để có chẩn đoán chính xác, vui lòng tham khảo ý kiến bác sĩ chuyên khoa.
+        </p>
+    </div>
+</div>
+
+<script>
+    // Auto-fill sample data
+    function fillSample(type) {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        let sampleData;
+        
+        if (type === 'normal') {
+            sampleData = [1, 85, 66, 29, 0, 26.6, 0.351, 31];
+        } else {
+            sampleData = [8, 183, 64, 0, 0, 23.3, 0.672, 32];
         }
         
-        // Add sample buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('prediction-form');
-            const buttonDiv = document.createElement('div');
-            buttonDiv.style.marginBottom = '15px';
-            buttonDiv.innerHTML = `
-                <button type="button" onclick="fillSample('normal')" style="width: 48%; margin-right: 4%;">📝 Mẫu bình thường</button>
-                <button type="button" onclick="fillSample('risk')" style="width: 48%;">⚠️ Mẫu có nguy cơ</button>
-            `;
-            form.insertBefore(buttonDiv, form.querySelector('button[type="submit"]'));
+        inputs.forEach((input, index) => {
+            input.value = sampleData[index];
+            input.style.borderColor = '#28a745';
         });
+    }
+    
+    // Add sample buttons
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('prediction-form');
+        const buttonDiv = document.createElement('div');
+        buttonDiv.style.marginBottom = '15px';
+        buttonDiv.innerHTML = `
+            <button type="button" onclick="fillSample('normal')" style="width: 48%; margin-right: 4%; background: #28a745;">📝 Mẫu bình thường</button>
+            <button type="button" onclick="fillSample('risk')" style="width: 48%; background: #ffc107; color: #333;">⚠️ Mẫu có nguy cơ</button>
+        `;
+        form.insertBefore(buttonDiv, form.querySelector('button[type="submit"]'));
+    });
+    
+    // Validation
+    document.getElementById('prediction-form').addEventListener('submit', function(e) {
+        const inputs = this.querySelectorAll('input[required]');
+        let allValid = true;
         
-        // Validation
-        document.getElementById('prediction-form').addEventListener('submit', function(e) {
-            const inputs = this.querySelectorAll('input[required]');
-            let allValid = true;
-            
-            inputs.forEach(input => {
-                const value = input.value.trim();
-                if (!value || isNaN(value)) {
-                    allValid = false;
-                    input.style.borderColor = '#dc3545';
-                } else {
-                    input.style.borderColor = '#28a745';
-                }
-            });
-            
-            if (!allValid) {
-                e.preventDefault();
-                alert('❌ Vui lòng nhập số hợp lệ cho tất cả các trường!');
+        inputs.forEach(input => {
+            const value = input.value.trim();
+            if (!value || isNaN(value)) {
+                allValid = false;
+                input.style.borderColor = '#dc3545';
+            } else {
+                input.style.borderColor = '#28a745';
             }
         });
-    </script>
-</body>
-</html>
+        
+        if (!allValid) {
+            e.preventDefault();
+            alert('❌ Vui lòng nhập số hợp lệ cho tất cả các trường!');
+        }
+    });
+</script>
+{% endblock %}

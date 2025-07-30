@@ -1,33 +1,91 @@
 {% extends 'base.html' %}
-{% block title %}Bài viết - SmartHealth{% endblock %}
+{% block title %}Bài viết - Health Prediction System{% endblock %}
 {% block content %}
-<div class="container">
-    <h1>Kiến thức về bệnh tiểu đường</h1>
-    <div style="display: flex; flex-direction: column; gap: 28px;">
-        <div class="info-box" style="display: flex; align-items: flex-start; gap: 18px;">
-            <img src="https://images.unsplash.com/photo-1512070679279-c2f999098c01?auto=format&fit=crop&w=200&q=80" alt="Dấu hiệu tiểu đường" style="width:110px; height:80px; object-fit:cover; border-radius:10px;">
-            <div>
-                <h3 style="margin-top:0;">1. Dấu hiệu sớm nhận biết tiểu đường</h3>
-                <p>Khát nước nhiều, tiểu nhiều, sụt cân không rõ nguyên nhân, mệt mỏi kéo dài... Nếu bạn có các dấu hiệu này, hãy kiểm tra sức khỏe sớm.</p>
+<div class="form-container" style="max-width: 900px;">
+    <h2 class="form-title">📚 Kiến thức sức khỏe</h2>
+    
+    <div style="margin-bottom: 30px;">
+        <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">🩺 Bệnh tiểu đường</h3>
+        <div style="display: flex; flex-direction: column; gap: 25px;">
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; display: flex; align-items: flex-start; gap: 20px;">
+                <img src="https://images.unsplash.com/photo-1512070679279-c2f999098c01?auto=format&fit=crop&w=150&q=80" alt="Dấu hiệu tiểu đường" style="width:120px; height:90px; object-fit:cover; border-radius:8px;">
+                <div>
+                    <h4 style="margin: 0 0 10px 0; color: #333;">1. Dấu hiệu sớm nhận biết tiểu đường</h4>
+                    <p style="margin: 0; color: #555; line-height: 1.6;">
+                        Khát nước nhiều, tiểu nhiều, sụt cân không rõ nguyên nhân, mệt mỏi kéo dài, 
+                        vết thương lâu lành, mờ mắt... Nếu bạn có các dấu hiệu này, hãy kiểm tra sức khỏe sớm.
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="info-box" style="display: flex; align-items: flex-start; gap: 18px;">
-            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=200&q=80" alt="Các loại tiểu đường" style="width:110px; height:80px; object-fit:cover; border-radius:10px;">
-            <div>
-                <h3 style="margin-top:0;">2. Các loại tiểu đường thường gặp</h3>
-                <p>Tiểu đường type 1, type 2, tiểu đường thai kỳ... Mỗi loại có nguyên nhân và cách kiểm soát khác nhau.</p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; display: flex; align-items: flex-start; gap: 20px;">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=150&q=80" alt="Các loại tiểu đường" style="width:120px; height:90px; object-fit:cover; border-radius:8px;">
+                <div>
+                    <h4 style="margin: 0 0 10px 0; color: #333;">2. Các loại tiểu đường thường gặp</h4>
+                    <p style="margin: 0; color: #555; line-height: 1.6;">
+                        <strong>Type 1:</strong> Tuyến tụy không sản xuất insulin. <strong>Type 2:</strong> Cơ thể kháng insulin. 
+                        <strong>Tiểu đường thai kỳ:</strong> Xuất hiện trong thời kỳ mang thai. Mỗi loại có nguyên nhân và cách kiểm soát khác nhau.
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="info-box" style="display: flex; align-items: flex-start; gap: 18px;">
-            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=200&q=80" alt="Chế độ ăn uống cho người tiểu đường" style="width:110px; height:80px; object-fit:cover; border-radius:10px;">
-            <div>
-                <h3 style="margin-top:0;">3. Tiểu đường và chế độ ăn uống</h3>
-                <p>Ăn nhiều rau xanh, hạn chế tinh bột, kiểm soát lượng đường hấp thụ giúp phòng ngừa và kiểm soát tiểu đường hiệu quả.</p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; display: flex; align-items: flex-start; gap: 20px;">
+                <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=150&q=80" alt="Chế độ ăn uống" style="width:120px; height:90px; object-fit:cover; border-radius:8px;">
+                <div>
+                    <h4 style="margin: 0 0 10px 0; color: #333;">3. Chế độ ăn uống cho người tiểu đường</h4>
+                    <p style="margin: 0; color: #555; line-height: 1.6;">
+                        Ăn nhiều rau xanh, hạn chế tinh bột, kiểm soát lượng đường hấp thụ, 
+                        chia nhỏ bữa ăn, uống đủ nước giúp phòng ngừa và kiểm soát tiểu đường hiệu quả.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-    <div style="text-align:center; margin-top:28px;">
-        <a href="/">⬅️ Quay lại trang chủ</a>
+
+    <div style="margin-bottom: 30px;">
+        <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">❤️ Bệnh tim mạch</h3>
+        <div style="display: flex; flex-direction: column; gap: 25px;">
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; display: flex; align-items: flex-start; gap: 20px;">
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=150&q=80" alt="Triệu chứng bệnh tim" style="width:120px; height:90px; object-fit:cover; border-radius:8px;">
+                <div>
+                    <h4 style="margin: 0 0 10px 0; color: #333;">1. Triệu chứng bệnh tim mạch</h4>
+                    <p style="margin: 0; color: #555; line-height: 1.6;">
+                        Đau ngực, khó thở, mệt mỏi, chóng mặt, phù chân, nhịp tim bất thường... 
+                        Các triệu chứng này có thể cảnh báo vấn đề về tim mạch cần được khám sớm.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; display: flex; align-items: flex-start; gap: 20px;">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=150&q=80" alt="Phòng ngừa bệnh tim" style="width:120px; height:90px; object-fit:cover; border-radius:8px;">
+                <div>
+                    <h4 style="margin: 0 0 10px 0; color: #333;">2. Phòng ngừa bệnh tim mạch</h4>
+                    <p style="margin: 0; color: #555; line-height: 1.6;">
+                        Tập thể dục đều đặn, ăn uống lành mạnh, kiểm soát huyết áp và cholesterol, 
+                        bỏ thuốc lá, giảm stress, khám sức khỏe định kỳ giúp bảo vệ tim mạch.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; display: flex; align-items: flex-start; gap: 20px;">
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=150&q=80" alt="Yếu tố nguy cơ" style="width:120px; height:90px; object-fit:cover; border-radius:8px;">
+                <div>
+                    <h4 style="margin: 0 0 10px 0; color: #333;">3. Yếu tố nguy cơ bệnh tim</h4>
+                    <p style="margin: 0; color: #555; line-height: 1.6;">
+                        Tuổi cao, tiền sử gia đình, huyết áp cao, cholesterol cao, tiểu đường, 
+                        béo phì, hút thuốc, ít vận động là những yếu tố làm tăng nguy cơ bệnh tim.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: #e8f4fd; padding: 20px; border-radius: 10px; border-left: 5px solid #667eea;">
+        <h4 style="color: #333; margin-bottom: 10px;">💡 Lời khuyên</h4>
+        <p style="color: #555; margin: 0; line-height: 1.6;">
+            Thông tin trên chỉ mang tính chất tham khảo. Để có chẩn đoán chính xác và điều trị hiệu quả, 
+            vui lòng tham khảo ý kiến bác sĩ chuyên khoa. Phòng bệnh hơn chữa bệnh - hãy chủ động kiểm tra sức khỏe định kỳ!
+        </p>
     </div>
 </div>
 {% endblock %} 

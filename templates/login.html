@@ -1,17 +1,48 @@
 {% extends 'base.html' %}
-{% block title %}Đăng nhập - SmartHealth{% endblock %}
+{% block title %}Đăng nhập - Health Prediction System{% endblock %}
 {% block content %}
-<div class="container">
-    <h1>Đăng nhập</h1>
-    <form method="post">
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
-        <label>Mật khẩu:</label><br>
-        <input type="password" name="password" required><br><br>
-        <button type="submit">Đăng nhập</button>
+<div class="form-container" style="max-width: 500px;">
+    <h2 class="form-title">🔐 Đăng nhập</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966484.png" alt="Logo" style="width: 60px; height: 60px; margin-bottom: 15px;">
+        <p style="color: #666; margin: 0;">Đăng nhập để truy cập đầy đủ tính năng</p>
+    </div>
+
+    <form method="post" style="margin-bottom: 25px;">
+        <div class="form-group">
+            <label for="email">📧 Email:</label>
+            <input type="email" id="email" name="email" placeholder="Nhập email của bạn" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">🔒 Mật khẩu:</label>
+            <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
+        </div>
+        
+        <button type="submit">🚀 Đăng nhập</button>
     </form>
-    <div style="text-align:center; margin-top:20px;">
-        <a href="/">⬅️ Về trang chủ</a>
+
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+        <h4 style="color: #333; margin-bottom: 15px;">✨ Tính năng dành cho thành viên</h4>
+        <ul style="color: #555; line-height: 1.6; text-align: left; margin: 0;">
+            <li>📊 Lưu trữ lịch sử kiểm tra sức khỏe</li>
+            <li>📈 Theo dõi chỉ số sức khỏe theo thời gian</li>
+            <li>🔔 Nhận thông báo kiểm tra định kỳ</li>
+            <li>📋 Tạo báo cáo sức khỏe chi tiết</li>
+            <li>💬 Tư vấn sức khỏe từ chuyên gia</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center;">
+        <p style="color: #666; margin-bottom: 15px;">Chưa có tài khoản?</p>
+        <button style="background: #28a745; width: auto; padding: 12px 30px;">📝 Đăng ký ngay</button>
+    </div>
+
+    <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea; margin-top: 20px;">
+        <p style="color: #555; margin: 0; font-size: 14px; text-align: center;">
+            <strong>🔒 Bảo mật:</strong> Thông tin của bạn được mã hóa và bảo vệ an toàn
+        </p>
     </div>
 </div>
 {% endblock %} 
