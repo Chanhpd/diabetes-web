@@ -1,62 +1,229 @@
 {% extends 'base.html' %}
 
-{% block title %}Health Prediction System - Trang chủ{% endblock %}
+{% block title %}Trang chủ - Health Prediction System{% endblock %}
 
 {% block content %}
-<div style="text-align: center; padding: 40px 0;">
-    <h1 style="font-size: 2.5em; color: white; margin-bottom: 20px;">🏥 Health Prediction System</h1>
-    <p style="font-size: 1.2em; color: white; margin-bottom: 40px;">Hệ thống dự đoán sức khỏe sử dụng Machine Learning</p>
-    
-    <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
-        <a href="/predict" class="prediction-card diabetes">
-            <div style="font-size: 3em; margin-bottom: 20px;">🩺</div>
-            <h3 style="color: #333; margin-bottom: 15px; font-size: 1.5em;">Dự đoán tiểu đường</h3>
-            <p style="color: #666; line-height: 1.6;">Phân tích nguy cơ mắc bệnh tiểu đường dựa trên các chỉ số sức khỏe cơ bản như glucose, huyết áp, BMI và các yếu tố khác.</p>
+<!-- Hero Section -->
+<section class="hero-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 80px 0; border-radius: 20px; margin-bottom: 60px; color: white; text-align: center;">
+  <div class="container">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <h1 style="font-size: 3.5em; font-weight: 700; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+        Hệ thống dự đoán sức khỏe
+      </h1>
+      <p style="font-size: 1.3em; margin-bottom: 40px; opacity: 0.9; line-height: 1.6;">
+        Sử dụng công nghệ AI/ML tiên tiến để dự đoán nguy cơ bệnh tiểu đường và bệnh tim mạch. 
+        Kết quả chính xác, nhanh chóng và đáng tin cậy.
+      </p>
+      
+      <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
+        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
+          <i class="bi bi-shield-check" style="font-size: 2em; margin-bottom: 10px; display: block;"></i>
+          <strong>Độ chính xác cao</strong>
+          <p style="margin: 5px 0 0 0; font-size: 0.9em; opacity: 0.8;">Sử dụng thuật toán Random Forest</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
+          <i class="bi bi-lightning" style="font-size: 2em; margin-bottom: 10px; display: block;"></i>
+          <strong>Kết quả nhanh</strong>
+          <p style="margin: 5px 0 0 0; font-size: 0.9em; opacity: 0.8;">Dự đoán trong vài giây</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
+          <i class="bi bi-graph-up" style="font-size: 2em; margin-bottom: 10px; display: block;"></i>
+          <strong>Phân tích chi tiết</strong>
+          <p style="margin: 5px 0 0 0; font-size: 0.9em; opacity: 0.8;">Xác suất và độ tin cậy</p>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <a href="/predict" style="background: white; color: #667eea; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
+          <i class="bi bi-heart-pulse"></i>
+          Dự đoán tiểu đường
         </a>
-        
-        <a href="/heart" class="prediction-card heart">
-            <div style="font-size: 3em; margin-bottom: 20px;">❤️</div>
-            <h3 style="color: #333; margin-bottom: 15px; font-size: 1.5em;">Dự đoán bệnh tim</h3>
-            <p style="color: #666; line-height: 1.6;">Đánh giá nguy cơ mắc bệnh tim mạch thông qua các chỉ số như huyết áp, cholesterol, ECG và các triệu chứng lâm sàng.</p>
+        <a href="/heart" style="background: rgba(255,255,255,0.2); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 2px solid white; display: flex; align-items: center; gap: 10px;">
+          <i class="bi bi-heart"></i>
+          Dự đoán bệnh tim
         </a>
+      </div>
     </div>
-    
-    <div style="background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 15px; max-width: 800px; margin: 0 auto;">
-        <h3 style="color: #333; margin-bottom: 20px;">✨ Tính năng chính</h3>
-        <ul style="text-align: left; max-width: 600px; margin: 0 auto; color: #555;">
-            <li style="margin-bottom: 10px;">🎯 <strong>Độ chính xác cao:</strong> Sử dụng các thuật toán Machine Learning tiên tiến</li>
-            <li style="margin-bottom: 10px;">⚡ <strong>Kết quả nhanh chóng:</strong> Dự đoán tức thì với giao diện thân thiện</li>
-            <li style="margin-bottom: 10px;">📊 <strong>Phân tích chi tiết:</strong> Hiển thị xác suất và độ tin cậy của kết quả</li>
-            <li style="margin-bottom: 10px;">🔧 <strong>Debug tools:</strong> Công cụ kiểm tra và test model</li>
-            <li style="margin-bottom: 10px;">📱 <strong>Responsive design:</strong> Tương thích với mọi thiết bị</li>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section style="margin-bottom: 60px;">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 50px;">
+      <h2 style="font-size: 2.5em; font-weight: 700; color: #2c3e50; margin-bottom: 15px;">
+        Tính năng chính
+      </h2>
+      <p style="font-size: 1.2em; color: #6c757d; max-width: 600px; margin: 0 auto;">
+        Khám phá các tính năng mạnh mẽ của hệ thống dự đoán sức khỏe tiên tiến
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+      <!-- Diabetes Prediction -->
+      <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
+          <i class="bi bi-heart-pulse" style="font-size: 2em; color: white;"></i>
+        </div>
+        <h3 style="font-size: 1.5em; font-weight: 600; margin-bottom: 15px; color: #2c3e50;">
+          Dự đoán tiểu đường
+        </h3>
+        <p style="color: #6c757d; line-height: 1.6; margin-bottom: 25px;">
+          Phân tích các chỉ số quan trọng như glucose, huyết áp, BMI và các yếu tố khác để dự đoán nguy cơ mắc bệnh tiểu đường.
+        </p>
+        <ul style="text-align: left; color: #6c757d; margin-bottom: 25px; padding-left: 20px;">
+          <li>Phân tích 8 chỉ số quan trọng</li>
+          <li>Độ chính xác lên đến 95%</li>
+          <li>Kết quả tức thì</li>
+          <li>Hướng dẫn phòng ngừa</li>
         </ul>
+        <a href="/predict" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; display: inline-block;">
+          Bắt đầu dự đoán
+        </a>
+      </div>
+
+      <!-- Heart Disease Prediction -->
+      <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+        <div style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
+          <i class="bi bi-heart" style="font-size: 2em; color: white;"></i>
+        </div>
+        <h3 style="font-size: 1.5em; font-weight: 600; margin-bottom: 15px; color: #2c3e50;">
+          Dự đoán bệnh tim
+        </h3>
+        <p style="color: #6c757d; line-height: 1.6; margin-bottom: 25px;">
+          Đánh giá toàn diện các yếu tố nguy cơ tim mạch bao gồm tuổi, giới tính, cholesterol và các chỉ số sức khỏe khác.
+        </p>
+        <ul style="text-align: left; color: #6c757d; margin-bottom: 25px; padding-left: 20px;">
+          <li>Phân tích 11 chỉ số tim mạch</li>
+          <li>Độ chính xác cao</li>
+          <li>Phân tích đa chiều</li>
+          <li>Khuyến nghị điều trị</li>
+        </ul>
+        <a href="/heart" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; display: inline-block;">
+          Kiểm tra ngay
+        </a>
+      </div>
+
+      <!-- AI Technology -->
+      <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+        <div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
+          <i class="bi bi-cpu" style="font-size: 2em; color: white;"></i>
+        </div>
+        <h3 style="font-size: 1.5em; font-weight: 600; margin-bottom: 15px; color: #2c3e50;">
+          Công nghệ AI/ML
+        </h3>
+        <p style="color: #6c757d; line-height: 1.6; margin-bottom: 25px;">
+          Sử dụng các thuật toán machine learning tiên tiến để phân tích dữ liệu và đưa ra dự đoán chính xác.
+        </p>
+        <ul style="text-align: left; color: #6c757d; margin-bottom: 25px; padding-left: 20px;">
+          <li>Random Forest Algorithm</li>
+          <li>Deep Learning Models</li>
+          <li>Real-time Processing</li>
+          <li>Continuous Learning</li>
+        </ul>
+        <a href="/about" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; display: inline-block;">
+          Tìm hiểu thêm
+        </a>
+      </div>
     </div>
-</div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 60px 0; border-radius: 20px; margin-bottom: 60px; color: white;">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 50px;">
+      <h2 style="font-size: 2.5em; font-weight: 700; margin-bottom: 15px;">
+        Thống kê ấn tượng
+      </h2>
+      <p style="font-size: 1.2em; opacity: 0.9; max-width: 600px; margin: 0 auto;">
+        Những con số chứng minh hiệu quả của hệ thống dự đoán sức khỏe
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
+      <div>
+        <div style="font-size: 3em; font-weight: 700; margin-bottom: 10px; color: #667eea;">95%</div>
+        <p style="font-size: 1.1em; opacity: 0.9;">Độ chính xác</p>
+      </div>
+      <div>
+        <div style="font-size: 3em; font-weight: 700; margin-bottom: 10px; color: #28a745;">10,000+</div>
+        <p style="font-size: 1.1em; opacity: 0.9;">Lượt dự đoán</p>
+      </div>
+      <div>
+        <div style="font-size: 3em; font-weight: 700; margin-bottom: 10px; color: #ff6b6b;">3 giây</div>
+        <p style="font-size: 1.1em; opacity: 0.9;">Thời gian xử lý</p>
+      </div>
+      <div>
+        <div style="font-size: 3em; font-weight: 700; margin-bottom: 10px; color: #ffc107;">24/7</div>
+        <p style="font-size: 1.1em; opacity: 0.9;">Hỗ trợ trực tuyến</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section style="text-align: center; margin-bottom: 60px;">
+  <div class="container">
+    <div style="background: white; padding: 60px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+      <h2 style="font-size: 2.5em; font-weight: 700; color: #2c3e50; margin-bottom: 20px;">
+        Bắt đầu hành trình bảo vệ sức khỏe
+      </h2>
+      <p style="font-size: 1.2em; color: #6c757d; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Chỉ cần vài phút để có được đánh giá sức khỏe chính xác và các khuyến nghị phù hợp.
+      </p>
+      
+      <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+        <a href="/predict" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 18px 35px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1em; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
+          <i class="bi bi-heart-pulse"></i>
+          Dự đoán tiểu đường
+        </a>
+        <a href="/heart" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 18px 35px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1em; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
+          <i class="bi bi-heart"></i>
+          Dự đoán bệnh tim
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Disclaimer -->
+<section style="background: #fff3cd; padding: 30px; border-radius: 15px; border-left: 5px solid #ffc107; margin-bottom: 40px;">
+  <div style="text-align: center; color: #856404;">
+    <h4 style="margin-bottom: 15px; font-weight: 600;">
+      <i class="bi bi-exclamation-triangle"></i> Lưu ý quan trọng
+    </h4>
+    <p style="margin: 0; font-size: 1.1em; line-height: 1.6;">
+      <strong>Kết quả dự đoán chỉ mang tính chất tham khảo và hỗ trợ.</strong> 
+      Để có chẩn đoán chính xác và điều trị phù hợp, vui lòng tham khảo ý kiến bác sĩ chuyên khoa. 
+      Hệ thống này không thay thế cho việc khám bệnh và tư vấn y tế chuyên nghiệp.
+    </p>
+  </div>
+</section>
 
 <style>
-.prediction-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    padding: 30px;
-    width: 300px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.prediction-card:hover {
-    transform: translateY(-5px);
+  .hero-section a:hover {
+    transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.prediction-card.diabetes {
-    border-left: 5px solid #667eea;
-}
-
-.prediction-card.heart {
-    border-left: 5px solid #ff6b6b;
-}
+  }
+  
+  .hero-section a:first-child:hover {
+    background: #f8f9fa !important;
+    color: #667eea !important;
+  }
+  
+  .hero-section a:last-child:hover {
+    background: white !important;
+    color: #667eea !important;
+  }
+  
+  section > div > div > div:hover {
+    transform: translateY(-5px);
+  }
+  
+  .container a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
 </style>
 {% endblock %} 

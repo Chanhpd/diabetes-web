@@ -1,399 +1,685 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Health Prediction System{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-                 /* Header Styles */
-         .main-header {
-             background: rgba(255, 255, 255, 0.98);
-             backdrop-filter: blur(15px);
-             padding: 12px 0;
-             box-shadow: 0 4px 25px rgba(0,0,0,0.08);
-             position: sticky;
-             top: 0;
-             z-index: 1000;
-             border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-         }
-         
-         .header-container {
-             max-width: 1400px;
-             margin: 0 auto;
-             padding: 0 30px;
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-         }
-         
-         .logo-area {
-             display: flex;
-             align-items: center;
-             gap: 12px;
-             transition: transform 0.3s ease;
-         }
-         
-         .logo-area:hover {
-             transform: scale(1.05);
-         }
-         
-         .logo {
-             width: 45px;
-             height: 45px;
-             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-         }
-         
-         .site-title {
-             font-size: 1.6em;
-             font-weight: 700;
-             color: #667eea;
-             text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-             letter-spacing: -0.5px;
-         }
-         
-         .main-nav {
-             display: flex;
-             gap: 8px;
-             align-items: center;
-         }
-         
-         .main-nav a {
-             text-decoration: none;
-             color: #555;
-             padding: 10px 16px;
-             border-radius: 12px;
-             transition: all 0.3s ease;
-             font-weight: 500;
-             font-size: 0.95em;
-             position: relative;
-             display: flex;
-             flex-direction: column;
-             align-items: center;
-             min-width: 80px;
-             border: 1px solid transparent;
-         }
-         
-         .main-nav a:hover {
-             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-             color: white;
-             transform: translateY(-3px);
-             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-             border-color: rgba(255, 255, 255, 0.2);
-         }
-         
-         .main-nav a.active {
-             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-             color: white;
-             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-             border-color: rgba(255, 255, 255, 0.3);
-         }
-         
-         .main-nav a::before {
-             content: '';
-             position: absolute;
-             top: 0;
-             left: 0;
-             right: 0;
-             bottom: 0;
-             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-             border-radius: 12px;
-             opacity: 0;
-             transition: opacity 0.3s ease;
-             z-index: -1;
-         }
-         
-         .main-nav a:hover::before,
-         .main-nav a.active::before {
-             opacity: 1;
-         }
-        
-        /* Main Content */
-        main {
-            flex: 1;
-            padding: 20px;
-        }
-        
-        .content-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        /* Common Form Styles */
-        .form-container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .form-title {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 2em;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        
-        input[type="text"], select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        input[type="text"]:focus, select:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-        
-        input[type="text"]:valid, select:valid {
-            border-color: #28a745;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            width: 100%;
-            transition: transform 0.2s;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-        }
-        
-        /* Result Styles */
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-            white-space: pre-line;
-        }
-        
-        .error {
-            border-left-color: #dc3545;
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .success {
-            border-left-color: #28a745;
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .warning {
-            border-left-color: #ffc107;
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        /* Links */
-        .links {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .links a {
-            color: #667eea;
-            text-decoration: none;
-            margin: 0 10px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .links a:hover {
-            background: rgba(102, 126, 234, 0.1);
-        }
-        
-        /* Sample Data */
-        .sample-data {
-            background: #e9ecef;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-        
-        /* Form Row for side-by-side inputs */
-        .form-row {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .form-row .form-group {
-            flex: 1;
-        }
-        
-        /* Footer */
-        .main-footer {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            text-align: center;
-            color: #666;
-            margin-top: auto;
-        }
-        
-                 /* Responsive */
-         @media (max-width: 1024px) {
-             .header-container {
-                 padding: 0 20px;
-             }
-             
-             .main-nav {
-                 gap: 6px;
-             }
-             
-             .main-nav a {
-                 padding: 8px 12px;
-                 min-width: 70px;
-                 font-size: 0.9em;
-             }
-         }
-         
-         @media (max-width: 768px) {
-             .header-container {
-                 flex-direction: column;
-                 gap: 15px;
-                 padding: 0 15px;
-             }
-             
-             .logo-area {
-                 gap: 8px;
-             }
-             
-             .logo {
-                 width: 40px;
-                 height: 40px;
-             }
-             
-             .site-title {
-                 font-size: 1.4em;
-             }
-             
-             .main-nav {
-                 flex-wrap: wrap;
-                 justify-content: center;
-                 gap: 8px;
-             }
-             
-             .main-nav a {
-                 padding: 8px 12px;
-                 min-width: 60px;
-                 font-size: 0.85em;
-             }
-             
-             .form-row {
-                 flex-direction: column;
-             }
-         }
-         
-         @media (max-width: 480px) {
-             .main-nav {
-                 gap: 6px;
-             }
-             
-             .main-nav a {
-                 padding: 6px 10px;
-                 min-width: 50px;
-                 font-size: 0.8em;
-             }
-             
-             .site-title {
-                 font-size: 1.2em;
-             }
-         }
-    </style>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Health Prediction System{% endblock %}</title>
+  <meta name="description" content="Hệ thống dự đoán sức khỏe sử dụng AI/ML">
+  <meta name="keywords" content="health prediction, diabetes, heart disease, AI, machine learning">
+
+  <!-- Favicons -->
+  <link href="https://cdn-icons-png.flaticon.com/512/2966/2966484.png" rel="icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #667eea;
+      --secondary-color: #764ba2;
+      --accent-color: #ff6b6b;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --dark-color: #2c3e50;
+      --light-color: #f8f9fa;
+      --white-color: #ffffff;
+      --gray-color: #6c757d;
+      --border-color: #dee2e6;
+      --shadow: 0 4px 25px rgba(0,0,0,0.08);
+      --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      color: var(--dark-color);
+      background: var(--light-color);
+    }
+
+    /* Header Styles */
+    .header {
+      background: var(--white-color);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .topbar {
+      background: var(--gradient);
+      color: var(--white-color);
+      padding: 8px 0;
+      font-size: 14px;
+    }
+
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .contact-info i {
+      margin-right: 5px;
+    }
+
+    .contact-info a {
+      color: var(--white-color);
+      text-decoration: none;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      color: var(--white-color);
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .social-links a:hover {
+      opacity: 0.8;
+    }
+
+    .branding {
+      padding: 15px 0;
+      background: var(--white-color);
+    }
+
+    .branding .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--primary-color);
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .sitename {
+      font-size: 1.8em;
+      font-weight: 700;
+      margin: 0;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Navigation */
+    .navmenu {
+      display: flex;
+      align-items: center;
+    }
+
+    .navmenu ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 30px;
+    }
+
+    .navmenu a {
+      text-decoration: none;
+      color: var(--dark-color);
+      font-weight: 500;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navmenu a:hover,
+    .navmenu a.active {
+      background: var(--gradient);
+      color: var(--white-color);
+      transform: translateY(-2px);
+    }
+
+    .navmenu a i {
+      font-size: 1.1em;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    /* Main Content */
+    .main {
+      min-height: calc(100vh - 200px);
+      padding: 40px 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Form Styles */
+    .form-container {
+      background: var(--white-color);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-title {
+      text-align: center;
+      color: var(--dark-color);
+      margin-bottom: 30px;
+      font-size: 2.2em;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    input[type="text"], 
+    input[type="email"], 
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: var(--white-color);
+    }
+
+    input[type="text"]:focus, 
+    input[type="email"]:focus, 
+    input[type="password"]:focus,
+    select:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    input[type="text"]:valid, 
+    input[type="email"]:valid, 
+    select:valid {
+      border-color: var(--success-color);
+    }
+
+    button {
+      background: var(--gradient);
+      color: var(--white-color);
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 600;
+      width: 100%;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Result Styles */
+    .result {
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 12px;
+      border-left: 5px solid var(--primary-color);
+      white-space: pre-line;
+      font-weight: 500;
+    }
+
+    .result.error {
+      border-left-color: var(--danger-color);
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .result.success {
+      border-left-color: var(--success-color);
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .result.warning {
+      border-left-color: var(--warning-color);
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    /* Sample Data */
+    .sample-data {
+      background: #e9ecef;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 14px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    /* Links */
+    .links {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      margin: 0 10px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      border: 2px solid transparent;
+    }
+
+    .links a:hover {
+      background: var(--gradient);
+      color: var(--white-color);
+      border-color: var(--primary-color);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--dark-color);
+      color: var(--white-color);
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+
+    .footer-main {
+      margin-bottom: 30px;
+    }
+
+    .brand-section .sitename {
+      font-size: 1.5em;
+      color: var(--white-color);
+      margin-bottom: 15px;
+    }
+
+    .brand-description {
+      color: #bdc3c7;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .contact-info .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: #bdc3c7;
+    }
+
+    .footer-nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .nav-column h6 {
+      color: var(--white-color);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-nav a {
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-nav a:hover {
+      color: var(--primary-color);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #34495e;
+      padding-top: 20px;
+    }
+
+    .bottom-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .copyright {
+      color: #bdc3c7;
+    }
+
+    .legal-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .legal-links a {
+      color: #bdc3c7;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .legal-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .credits {
+      color: #95a5a6;
+      font-size: 12px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .topbar .container {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+
+      .branding .container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .navmenu {
+        display: none;
+      }
+
+      .mobile-nav-toggle {
+        display: block;
+      }
+
+      .form-container {
+        padding: 30px 20px;
+        margin: 0 15px;
+      }
+
+      .footer-nav-wrapper {
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .bottom-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .legal-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 25px 15px;
+      }
+
+      .form-title {
+        font-size: 1.8em;
+      }
+
+      .navmenu ul {
+        gap: 15px;
+      }
+
+      .navmenu a {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-         <header class="main-header">
-         <div class="header-container">
-             <div class="logo-area">
-                 <img src="https://cdn-icons-png.flaticon.com/512/2966/2966484.png" alt="logo" class="logo">
-                 <div class="site-title">
-                     <div>Health Prediction</div>
-                     <div style="font-size: 0.9em; color: #764ba2; font-weight: 600;">System</div>
-                 </div>
-             </div>
-             <nav class="main-nav">
-                 <a href="/" {% if request.endpoint == 'home' %}class="active"{% endif %}>
-                     <span style="font-size: 1.2em;">🏠</span>
-                     <span>Trang chủ</span>
-                 </a>
-                 <a href="/predict" {% if request.endpoint == 'predict' %}class="active"{% endif %}>
-                     <span style="font-size: 1.2em;">🩺</span>
-                     <span>Tiểu đường</span>
-                 </a>
-                 <a href="/heart" {% if request.endpoint == 'heart_predict' %}class="active"{% endif %}>
-                     <span style="font-size: 1.2em;">❤️</span>
-                     <span>Bệnh tim</span>
-                 </a>
-                 <a href="/articles">
-                     <span style="font-size: 1.2em;">📚</span>
-                     <span>Bài viết</span>
-                 </a>
-                 <a href="/products">
-                     <span style="font-size: 1.2em;">🛒</span>
-                     <span>Sản phẩm</span>
-                 </a>
-                 <a href="/about">
-                     <span style="font-size: 1.2em;">📌</span>
-                     <span>Về chúng tôi</span>
-                 </a>
-                 <a href="/login">
-                     <span style="font-size: 1.2em;">🔐</span>
-                     <span>Đăng nhập</span>
-                 </a>
-             </nav>
-         </div>
-     </header>
-    
-    <main>
-        <div class="content-container">
-            {% block content %}{% endblock %}
+  <header id="header" class="header fixed-top">
+    <div class="topbar">
+      <div class="container">
+        <div class="contact-info">
+          <i class="bi bi-envelope"></i>
+          <a href="mailto:contact@healthprediction.com">contact@healthprediction.com</a>
+          <i class="bi bi-phone"></i>
+          <span>+84 123 456 789</span>
         </div>
-    </main>
-    
-    <footer class="main-footer">
-        <div>
-            <strong>Health Prediction System</strong> &copy; 2024. All rights reserved.<br>
-            💡 <em>Lưu ý: Đây là công cụ hỗ trợ chẩn đoán, không thay thế cho tư vấn y tế chuyên nghiệp.</em>
+        <div class="social-links">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
         </div>
-    </footer>
+      </div>
+    </div>
+
+    <div class="branding">
+      <div class="container">
+        <a href="/" class="logo">
+          <img src="https://cdn-icons-png.flaticon.com/512/2966/2966484.png" alt="Health Prediction System">
+          <h1 class="sitename">Health Prediction System</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/" {% if request.endpoint == 'home' %}class="active"{% endif %}>
+              <i class="bi bi-house"></i>Trang chủ
+            </a></li>
+            <li><a href="/predict" {% if request.endpoint == 'predict' %}class="active"{% endif %}>
+              <i class="bi bi-heart-pulse"></i>Tiểu đường
+            </a></li>
+            <li><a href="/heart" {% if request.endpoint == 'heart_predict' %}class="active"{% endif %}>
+              <i class="bi bi-heart"></i>Bệnh tim
+            </a></li>
+            <li><a href="/articles">
+              <i class="bi bi-journal-text"></i>Bài viết
+            </a></li>
+            <li><a href="/products">
+              <i class="bi bi-bag"></i>Sản phẩm
+            </a></li>
+            <li><a href="/about">
+              <i class="bi bi-info-circle"></i>Về chúng tôi
+            </a></li>
+            <li><a href="/login">
+              <i class="bi bi-person"></i>Đăng nhập
+            </a></li>
+          </ul>
+          <i class="mobile-nav-toggle bi bi-list"></i>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="row">
+          <div class="col-lg-5">
+            <div class="brand-section">
+              <h1 class="sitename">Health Prediction System</h1>
+              <p class="brand-description">
+                Hệ thống dự đoán sức khỏe tiên tiến sử dụng công nghệ AI/ML để hỗ trợ chẩn đoán bệnh tiểu đường và bệnh tim mạch. 
+                Cung cấp kết quả chính xác và nhanh chóng để bảo vệ sức khỏe của bạn.
+              </p>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>123 Đường ABC, Quận 1, TP.HCM</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+84 123 456 789</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>contact@healthprediction.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="footer-nav-wrapper">
+              <div class="nav-column">
+                <h6>Dịch vụ</h6>
+                <nav class="footer-nav">
+                  <a href="/predict">Dự đoán tiểu đường</a>
+                  <a href="/heart">Dự đoán bệnh tim</a>
+                  <a href="/articles">Bài viết y tế</a>
+                  <a href="/products">Sản phẩm sức khỏe</a>
+                </nav>
+              </div>
+
+              <div class="nav-column">
+                <h6>Thông tin</h6>
+                <nav class="footer-nav">
+                  <a href="/about">Về chúng tôi</a>
+                  <a href="/articles">Tin tức y tế</a>
+                  <a href="/products">Sản phẩm</a>
+                  <a href="/contact">Liên hệ</a>
+                </nav>
+              </div>
+
+              <div class="nav-column">
+                <h6>Hỗ trợ</h6>
+                <nav class="footer-nav">
+                  <a href="/login">Đăng nhập</a>
+                  <a href="/help">Hướng dẫn</a>
+                  <a href="/faq">Câu hỏi thường gặp</a>
+                  <a href="/contact">Liên hệ hỗ trợ</a>
+                </nav>
+              </div>
+
+              <div class="nav-column">
+                <h6>Pháp lý</h6>
+                <nav class="footer-nav">
+                  <a href="/privacy">Chính sách bảo mật</a>
+                  <a href="/terms">Điều khoản sử dụng</a>
+                  <a href="/disclaimer">Tuyên bố miễn trừ</a>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="bottom-content">
+          <div class="copyright">
+            <p>&copy; 2024 <strong>Health Prediction System</strong>. All rights reserved.</p>
+          </div>
+          <div class="legal-links">
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <div class="credits">
+              💡 <em>Lưu ý: Đây là công cụ hỗ trợ chẩn đoán, không thay thế cho tư vấn y tế chuyên nghiệp.</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    document.querySelector('.mobile-nav-toggle').addEventListener('click', function() {
+      const navmenu = document.querySelector('.navmenu');
+      navmenu.classList.toggle('show');
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html> 

@@ -4,136 +4,277 @@
 
 {% block content %}
 <div class="form-container">
-    <h2 class="form-title">🩺 Dự đoán nguy cơ tiểu đường</h2>
-    
-    <form action="/predict" method="post" id="prediction-form">
-        <div class="form-group">
-            <input type="text" name="Pregnancies" placeholder="Số lần mang thai (VD: 1)" required>
-        </div>
-        
-        <div class="form-group">
-            <input type="text" name="Glucose" placeholder="Nồng độ glucose (VD: 85)" required>
-        </div>
-        
-        <div class="form-group">
-            <input type="text" name="BloodPressure" placeholder="Huyết áp (VD: 66)" required>
-        </div>
-        
-        <div class="form-group">
-            <input type="text" name="SkinThickness" placeholder="Độ dày da (VD: 29)" required>
-        </div>
-        
-        <div class="form-group">
-            <input type="text" name="Insulin" placeholder="Insulin (VD: 0)" required>
-        </div>
-        
-        <div class="form-group">
-            <input type="text" name="BMI" placeholder="Chỉ số BMI (VD: 26.6)" required>
-        </div>
-        
-        <div class="form-group">
-            <input type="text" name="DiabetesPedigreeFunction" placeholder="Chỉ số di truyền (VD: 0.351)" required>
-        </div>
-        
-        <div class="form-group">
-            <input type="text" name="Age" placeholder="Tuổi (VD: 31)" required>
-        </div>
-        
-        <button type="submit">🔍 Dự đoán</button>
-    </form>
+  <h2 class="form-title">
+    <i class="bi bi-heart-pulse" style="margin-right: 15px; color: #667eea;"></i>
+    Dự đoán nguy cơ tiểu đường
+  </h2>
+  
+  <div style="background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%); padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #667eea;">
+    <h4 style="color: #2c3e50; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+      <i class="bi bi-info-circle"></i>
+      Hướng dẫn sử dụng
+    </h4>
+    <p style="color: #6c757d; margin: 0; line-height: 1.6;">
+      Vui lòng nhập các chỉ số sức khỏe của bạn vào các trường bên dưới. Hệ thống sẽ phân tích và đưa ra dự đoán về nguy cơ mắc bệnh tiểu đường.
+    </p>
+  </div>
+  
+  <form action="/predict" method="post" id="prediction-form">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+      <div class="form-group">
+        <label for="Pregnancies">
+          <i class="bi bi-person"></i> Số lần mang thai
+        </label>
+        <input type="text" id="Pregnancies" name="Pregnancies" placeholder="VD: 1" required>
+        <small style="color: #6c757d; font-size: 0.9em;">Nhập 0 nếu là nam giới</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="Glucose">
+          <i class="bi bi-droplet"></i> Nồng độ glucose (mg/dL)
+        </label>
+        <input type="text" id="Glucose" name="Glucose" placeholder="VD: 85" required>
+        <small style="color: #6c757d; font-size: 0.9em;">Chỉ số đường huyết lúc đói</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="BloodPressure">
+          <i class="bi bi-heart-pulse"></i> Huyết áp (mmHg)
+        </label>
+        <input type="text" id="BloodPressure" name="BloodPressure" placeholder="VD: 66" required>
+        <small style="color: #6c757d; font-size: 0.9em;">Huyết áp tâm thu</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="SkinThickness">
+          <i class="bi bi-rulers"></i> Độ dày da (mm)
+        </label>
+        <input type="text" id="SkinThickness" name="SkinThickness" placeholder="VD: 29" required>
+        <small style="color: #6c757d; font-size: 0.9em;">Độ dày nếp gấp da</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="Insulin">
+          <i class="bi bi-droplet-half"></i> Insulin (mu U/ml)
+        </label>
+        <input type="text" id="Insulin" name="Insulin" placeholder="VD: 0" required>
+        <small style="color: #6c757d; font-size: 0.9em;">Nồng độ insulin huyết thanh</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="BMI">
+          <i class="bi bi-speedometer2"></i> Chỉ số BMI
+        </label>
+        <input type="text" id="BMI" name="BMI" placeholder="VD: 26.6" required>
+        <small style="color: #6c757d; font-size: 0.9em;">Chỉ số khối cơ thể</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="DiabetesPedigreeFunction">
+          <i class="bi bi-diagram-3"></i> Chỉ số di truyền
+        </label>
+        <input type="text" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" placeholder="VD: 0.351" required>
+        <small style="color: #6c757d; font-size: 0.9em;">Hàm số di truyền tiểu đường</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="Age">
+          <i class="bi bi-calendar"></i> Tuổi
+        </label>
+        <input type="text" id="Age" name="Age" placeholder="VD: 31" required>
+        <small style="color: #6c757d; font-size: 0.9em;">Tuổi hiện tại</small>
+      </div>
+    </div>
 
-    {% if prediction_text %}
-    <div class="result 
-        {% if 'Lỗi' in prediction_text %}error
-        {% elif 'nguy cơ mắc' in prediction_text %}warning  
-        {% else %}success{% endif %}">
-        <strong>Kết quả:</strong> {{ prediction_text }}
-    </div>
-    {% endif %}
-    
-    <div class="sample-data">
-        <strong>📝 Dữ liệu mẫu để test:</strong><br>
-        <strong>Trường hợp bình thường:</strong> 1, 85, 66, 29, 0, 26.6, 0.351, 31<br>
-        <strong>Trường hợp có nguy cơ:</strong> 8, 183, 64, 0, 0, 23.3, 0.672, 32
-    </div>
-    
-    <div style="background: #e8f4fd; padding: 20px; border-radius: 10px; border-left: 5px solid #667eea; margin-top: 20px;">
-        <h4 style="color: #333; margin-bottom: 15px;">🔬 Công nghệ AI/ML</h4>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-            <div style="text-align: center;">
-                <div style="font-size: 2em; margin-bottom: 10px;">🎯</div>
-                <strong style="color: #333;">Độ chính xác cao</strong>
-                <p style="color: #666; font-size: 0.9em; margin: 5px 0 0 0;">Sử dụng thuật toán Random Forest</p>
-            </div>
-            <div style="text-align: center;">
-                <div style="font-size: 2em; margin-bottom: 10px;">⚡</div>
-                <strong style="color: #333;">Kết quả nhanh</strong>
-                <p style="color: #666; font-size: 0.9em; margin: 5px 0 0 0;">Dự đoán trong vài giây</p>
-            </div>
-            <div style="text-align: center;">
-                <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
-                <strong style="color: #333;">Phân tích chi tiết</strong>
-                <p style="color: #666; font-size: 0.9em; margin: 5px 0 0 0;">Xác suất và độ tin cậy</p>
-            </div>
-        </div>
+    <!-- Sample Data Buttons -->
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #dee2e6;">
+      <h5 style="color: #2c3e50; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+        <i class="bi bi-lightbulb"></i>
+        Dữ liệu mẫu để test
+      </h5>
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <button type="button" onclick="fillSample('normal')" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;">
+          <i class="bi bi-check-circle"></i>
+          Mẫu bình thường
+        </button>
+        <button type="button" onclick="fillSample('risk')" style="background: #ffc107; color: #333; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;">
+          <i class="bi bi-exclamation-triangle"></i>
+          Mẫu có nguy cơ
+        </button>
+      </div>
+      <div style="margin-top: 15px; font-size: 0.9em; color: #6c757d;">
+        <strong>Mẫu bình thường:</strong> 1, 85, 66, 29, 0, 26.6, 0.351, 31<br>
+        <strong>Mẫu có nguy cơ:</strong> 8, 183, 64, 0, 0, 23.3, 0.672, 32
+      </div>
     </div>
     
-    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin-top: 15px;">
-        <p style="color: #856404; margin: 0; font-size: 14px; text-align: center;">
-            <strong>💡 Lưu ý:</strong> Kết quả dự đoán chỉ mang tính chất tham khảo. Để có chẩn đoán chính xác, vui lòng tham khảo ý kiến bác sĩ chuyên khoa.
-        </p>
+    <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 1.1em; padding: 18px 30px;">
+      <i class="bi bi-search" style="margin-right: 10px;"></i>
+      Dự đoán ngay
+    </button>
+  </form>
+
+  {% if prediction_text %}
+  <div class="result 
+    {% if 'Lỗi' in prediction_text %}error
+    {% elif 'nguy cơ mắc' in prediction_text %}warning  
+    {% else %}success{% endif %}">
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+      {% if 'Lỗi' in prediction_text %}
+        <i class="bi bi-x-circle" style="font-size: 2em; color: #dc3545;"></i>
+      {% elif 'nguy cơ mắc' in prediction_text %}
+        <i class="bi bi-exclamation-triangle" style="font-size: 2em; color: #ffc107;"></i>
+      {% else %}
+        <i class="bi bi-check-circle" style="font-size: 2em; color: #28a745;"></i>
+      {% endif %}
+      <h4 style="margin: 0; color: inherit;">
+        {% if 'Lỗi' in prediction_text %}Lỗi xử lý
+        {% elif 'nguy cơ mắc' in prediction_text %}Cảnh báo
+        {% else %}Kết quả dự đoán{% endif %}
+      </h4>
     </div>
+    <p style="margin: 0; font-size: 1.1em; line-height: 1.6;">{{ prediction_text }}</p>
+  </div>
+  {% endif %}
+  
+  <!-- Technology Info -->
+  <div style="background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%); padding: 30px; border-radius: 15px; margin-top: 30px; border-left: 5px solid #667eea;">
+    <h4 style="color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+      <i class="bi bi-cpu"></i>
+      Công nghệ AI/ML
+    </h4>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+      <div style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <i class="bi bi-shield-check" style="font-size: 2.5em; color: #28a745; margin-bottom: 15px; display: block;"></i>
+        <h5 style="color: #2c3e50; margin-bottom: 8px;">Độ chính xác cao</h5>
+        <p style="color: #6c757d; font-size: 0.9em; margin: 0;">Sử dụng thuật toán Random Forest</p>
+      </div>
+      <div style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <i class="bi bi-lightning" style="font-size: 2.5em; color: #ffc107; margin-bottom: 15px; display: block;"></i>
+        <h5 style="color: #2c3e50; margin-bottom: 8px;">Kết quả nhanh</h5>
+        <p style="color: #6c757d; font-size: 0.9em; margin: 0;">Dự đoán trong vài giây</p>
+      </div>
+      <div style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <i class="bi bi-graph-up" style="font-size: 2.5em; color: #667eea; margin-bottom: 15px; display: block;"></i>
+        <h5 style="color: #2c3e50; margin-bottom: 8px;">Phân tích chi tiết</h5>
+        <p style="color: #6c757d; font-size: 0.9em; margin: 0;">Xác suất và độ tin cậy</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Disclaimer -->
+  <div style="background: #fff3cd; padding: 25px; border-radius: 12px; border-left: 5px solid #ffc107; margin-top: 30px;">
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+      <i class="bi bi-exclamation-triangle" style="font-size: 2em; color: #ffc107;"></i>
+      <h4 style="color: #856404; margin: 0;">Lưu ý quan trọng</h4>
+    </div>
+    <p style="color: #856404; margin: 0; line-height: 1.6; font-size: 1.1em;">
+      <strong>Kết quả dự đoán chỉ mang tính chất tham khảo.</strong> 
+      Để có chẩn đoán chính xác, vui lòng tham khảo ý kiến bác sĩ chuyên khoa. 
+      Hệ thống này không thay thế cho việc khám bệnh và tư vấn y tế chuyên nghiệp.
+    </p>
+  </div>
 </div>
 
 <script>
-    // Auto-fill sample data
-    function fillSample(type) {
-        const inputs = document.querySelectorAll('input[type="text"]');
-        let sampleData;
-        
-        if (type === 'normal') {
-            sampleData = [1, 85, 66, 29, 0, 26.6, 0.351, 31];
-        } else {
-            sampleData = [8, 183, 64, 0, 0, 23.3, 0.672, 32];
-        }
-        
-        inputs.forEach((input, index) => {
-            input.value = sampleData[index];
-            input.style.borderColor = '#28a745';
-        });
+  // Auto-fill sample data
+  function fillSample(type) {
+    const inputs = document.querySelectorAll('input[type="text"]');
+    let sampleData;
+    
+    if (type === 'normal') {
+      sampleData = [1, 85, 66, 29, 0, 26.6, 0.351, 31];
+    } else {
+      sampleData = [8, 183, 64, 0, 0, 23.3, 0.672, 32];
     }
     
-    // Add sample buttons
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('prediction-form');
-        const buttonDiv = document.createElement('div');
-        buttonDiv.style.marginBottom = '15px';
-        buttonDiv.innerHTML = `
-            <button type="button" onclick="fillSample('normal')" style="width: 48%; margin-right: 4%; background: #28a745;">📝 Mẫu bình thường</button>
-            <button type="button" onclick="fillSample('risk')" style="width: 48%; background: #ffc107; color: #333;">⚠️ Mẫu có nguy cơ</button>
-        `;
-        form.insertBefore(buttonDiv, form.querySelector('button[type="submit"]'));
+    inputs.forEach((input, index) => {
+      input.value = sampleData[index];
+      input.style.borderColor = '#28a745';
+      input.style.backgroundColor = '#f8fff9';
     });
     
-    // Validation
-    document.getElementById('prediction-form').addEventListener('submit', function(e) {
-        const inputs = this.querySelectorAll('input[required]');
-        let allValid = true;
-        
-        inputs.forEach(input => {
-            const value = input.value.trim();
-            if (!value || isNaN(value)) {
-                allValid = false;
-                input.style.borderColor = '#dc3545';
-            } else {
-                input.style.borderColor = '#28a745';
-            }
-        });
-        
-        if (!allValid) {
-            e.preventDefault();
-            alert('❌ Vui lòng nhập số hợp lệ cho tất cả các trường!');
-        }
+    // Show success message
+    const message = type === 'normal' ? 'Đã điền dữ liệu mẫu bình thường' : 'Đã điền dữ liệu mẫu có nguy cơ';
+    showNotification(message, 'success');
+  }
+  
+  // Show notification
+  function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 10000;
+      animation: slideIn 0.3s ease;
+      background: ${type === 'success' ? '#28a745' : '#dc3545'};
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease';
+      setTimeout(() => document.body.removeChild(notification), 300);
+    }, 3000);
+  }
+  
+  // Add CSS animations
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Validation
+  document.getElementById('prediction-form').addEventListener('submit', function(e) {
+    const inputs = this.querySelectorAll('input[required]');
+    let allValid = true;
+    
+    inputs.forEach(input => {
+      const value = input.value.trim();
+      if (!value || isNaN(value)) {
+        allValid = false;
+        input.style.borderColor = '#dc3545';
+        input.style.backgroundColor = '#fff5f5';
+      } else {
+        input.style.borderColor = '#28a745';
+        input.style.backgroundColor = '#f8fff9';
+      }
     });
+    
+    if (!allValid) {
+      e.preventDefault();
+      showNotification('❌ Vui lòng nhập số hợp lệ cho tất cả các trường!', 'error');
+    }
+  });
+  
+  // Real-time validation
+  document.querySelectorAll('input[type="text"]').forEach(input => {
+    input.addEventListener('input', function() {
+      const value = this.value.trim();
+      if (value && !isNaN(value)) {
+        this.style.borderColor = '#28a745';
+        this.style.backgroundColor = '#f8fff9';
+      } else if (value) {
+        this.style.borderColor = '#dc3545';
+        this.style.backgroundColor = '#fff5f5';
+      } else {
+        this.style.borderColor = '#dee2e6';
+        this.style.backgroundColor = 'white';
+      }
+    });
+  });
 </script>
 {% endblock %}
