@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Error - Health Prediction System{% endblock %}
+{% block content %}
+<div class="form-container" style="max-width: 600px;">
+    <div style="text-align: center; padding: 40px 20px;">
+        <h2 style="color: #dc3545; margin-bottom: 20px;">⚠️ Đã xảy ra lỗi</h2>
+        {% if error %}
+            <p style="color: #666; margin-bottom: 20px;">{{ error }}</p>
+        {% endif %}
+        <div style="margin-top: 30px;">
+            <a href="{{ url_for('home') }}" style="background: #007bff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-right: 10px;">
+                🏠 Về trang chủ
+            </a>
+            <a href="javascript:history.back()" style="background: #6c757d; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                ⬅️ Quay lại
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

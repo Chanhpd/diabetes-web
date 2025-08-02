@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Đơn hàng của tôi - Health Prediction System{% endblock %}
+{% block content %}
+<div class="form-container" style="max-width: 1000px;">
+    <h2 class="form-title">📦 Đơn hàng của tôi</h2>
+
+    {% if orders %}
+    {% for order in orders %}
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h4 style="margin: 0; color: #333;">Đơn hàng #{{ order.id }}</h4>
+            {% set status_color = (
+            '#ffc107' if order.status == 'pending' else
+            '#17a2b8' if order.status == 'confirmed' else
+            '#007bff' if order.status == 'shipping' else
+            '#28a745' if order.status == 'delivered' else
+            '#dc3545'
+            ) %}
+
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <p style="margin: 5px 0;"><strong>Người nhận:</strong> {{ order.full_name }}</p>
+            <p style="margin: 5px 0;"><strong>Số điện thoại:</strong> {{ order.phone }}</p>
+            <p style="margin: 5px 0;"><strong>Địa chỉ:</strong> {{ order.address }}</p>
+            <p style="margin: 5px 0;"><strong>Ngày đặt:</strong> {{ order.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
+        </div>
+
+        <div style="border-top: 1px solid #dee2e6; padding-top: 15px;">
+            <h5 style="margin-bottom: 10px;">Sản phẩm:</h5>
+            {% for item in order.items %}
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <div>
+                    {{ item.product.name }} x {{ item.quantity }}
+                </div>
+                <div>
+                    ₫{{ "{:,.0f}".format(item.price * item.quantity) }}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div style="border-top: 1px dashed #dee2e6; margin-top: 10px; padding-top: 10px;">
+                <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                    <div>Tổng cộng:</div>
+                    <div style="color: #e74c3c;">₫{{ "{:,.0f}".format(order.total_amount) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div style="text-align: center; padding: 40px 20px;">
+        <p style="color: #666; margin-bottom: 20px;">Bạn chưa có đơn hàng nào</p>
+        <a href="{{ url_for('products') }}"
+            style="background: #007bff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+            Mua sắm ngay
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

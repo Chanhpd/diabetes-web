@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Đăng ký - Health Prediction System{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 500px; margin: 40px auto;">
+    <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px;">Đăng ký tài khoản</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('register') }}">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Tên người dùng</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit" class="btn btn-primary w-100"
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">📝 Đăng
+                    ký</button>
+            </div>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <p>Đã có tài khoản? <a href="{{ url_for('login') }}" style="color: #667eea;">Đăng nhập</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

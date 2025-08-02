@@ -7,82 +7,38 @@
     <div style="margin-bottom: 30px;">
         <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">🩺 Sản phẩm cho người tiểu đường</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            {% for product in diabetes_products %}
             <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
-                <img src="https://images.unsplash.com/photo-1550572017-edd951aa4fdc?auto=format&fit=crop&w=200&q=80" alt="Máy đo đường huyết" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
-                <h4 style="color: #333; margin-bottom: 10px;">Máy đo đường huyết Omron</h4>
+                <img src="{{ product.image_url }}" alt="{{ product.name }}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #333; margin-bottom: 10px;">{{ product.name }}</h4>
                 <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
-                    Máy đo đường huyết chính xác, dễ sử dụng với bộ nhớ lưu trữ 500 kết quả đo
+                    {{ product.description }}
                 </p>
                 <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
-                    ₫1,200,000
+                    ₫{{ "{:,.0f}".format(product.price) }}
                 </div>
-                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
+                <button style="background: #e74c3c; width: 100%;" onclick="alert('Chức năng mua hàng đang được phát triển!')">🛒 Mua ngay</button>
             </div>
-            
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
-                <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=200&q=80" alt="Thực phẩm chức năng" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
-                <h4 style="color: #333; margin-bottom: 10px;">Thực phẩm chức năng kiểm soát đường huyết</h4>
-                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
-                    Hỗ trợ kiểm soát đường huyết, giảm cholesterol với thành phần tự nhiên
-                </p>
-                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
-                    ₫650,000
-                </div>
-                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
-            </div>
-            
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
-                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=200&q=80" alt="Máy đo huyết áp" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
-                <h4 style="color: #333; margin-bottom: 10px;">Máy đo huyết áp tự động</h4>
-                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
-                    Máy đo huyết áp điện tử chính xác, có cảnh báo rối loạn nhịp tim
-                </p>
-                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
-                    ₫850,000
-                </div>
-                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
     <div style="margin-bottom: 30px;">
         <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">❤️ Sản phẩm cho người bệnh tim</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            {% for product in heart_products %}
             <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
-                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=200&q=80" alt="Máy đo nhịp tim" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
-                <h4 style="color: #333; margin-bottom: 10px;">Máy đo nhịp tim đeo tay</h4>
+                <img src="{{ product.image_url }}" alt="{{ product.name }}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #333; margin-bottom: 10px;">{{ product.name }}</h4>
                 <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
-                    Đồng hồ thông minh theo dõi nhịp tim 24/7, cảnh báo bất thường
+                    {{ product.description }}
                 </p>
                 <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
-                    ₫2,500,000
+                    ₫{{ "{:,.0f}".format(product.price) }}
                 </div>
-                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
+                <button style="background: #e74c3c; width: 100%;" onclick="alert('Chức năng mua hàng đang được phát triển!')">🛒 Mua ngay</button>
             </div>
-            
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
-                <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=200&q=80" alt="Omega-3" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
-                <h4 style="color: #333; margin-bottom: 10px;">Omega-3 hỗ trợ tim mạch</h4>
-                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
-                    Viên uống Omega-3 cao cấp, hỗ trợ sức khỏe tim mạch và giảm cholesterol
-                </p>
-                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
-                    ₫450,000
-                </div>
-                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
-            </div>
-            
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
-                <img src="https://images.unsplash.com/photo-1550572017-edd951aa4fdc?auto=format&fit=crop&w=200&q=80" alt="Máy đo cholesterol" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
-                <h4 style="color: #333; margin-bottom: 10px;">Máy đo cholesterol tại nhà</h4>
-                <p style="color: #666; margin-bottom: 15px; line-height: 1.5;">
-                    Thiết bị đo cholesterol nhanh chóng, kết quả chính xác trong 2 phút
-                </p>
-                <div style="color: #e74c3c; font-size: 1.2em; font-weight: bold; margin-bottom: 15px;">
-                    ₫1,800,000
-                </div>
-                <button style="background: #e74c3c; width: 100%;">🛒 Mua ngay</button>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
@@ -102,4 +58,78 @@
         </p>
     </div>
 </div>
+
+<!-- Modal Mua hàng -->
+<div id="buyModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+    <div style="position: relative; background: white; max-width: 500px; margin: 50px auto; padding: 20px; border-radius: 10px;">
+        <h3 style="margin-bottom: 20px;">🛒 Đặt hàng</h3>
+        <form id="buyForm" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+            <div>
+                <label style="display: block; margin-bottom: 5px;">Tên sản phẩm:</label>
+                <input type="text" id="productName" readonly style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 5px;">Số lượng:</label>
+                <input type="number" name="quantity" value="1" min="1" onchange="updateTotal()" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 5px;">Thành tiền:</label>
+                <input type="text" id="totalAmount" readonly style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 5px;">Họ tên người nhận:</label>
+                <input type="text" name="full_name" value="{{ user.full_name if user }}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 5px;">Số điện thoại:</label>
+                <input type="tel" name="phone" value="{{ user.phone if user }}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 5px;">Địa chỉ nhận hàng:</label>
+                <textarea name="address" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; min-height: 80px;">{{ user.address if user }}</textarea>
+            </div>
+            
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" onclick="hideBuyForm()" style="padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Hủy</button>
+                <button type="submit" style="padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Đặt hàng</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let currentProduct = null;
+
+function showBuyForm(productId, productName, price) {
+    currentProduct = { id: productId, name: productName, price: price };
+    document.getElementById('buyModal').style.display = 'block';
+    document.getElementById('productName').value = productName;
+    document.getElementById('buyForm').action = '/buy/' + productId;
+    updateTotal();
+}
+
+function hideBuyForm() {
+    document.getElementById('buyModal').style.display = 'none';
+}
+
+function updateTotal() {
+    if (!currentProduct) return;
+    const quantity = document.querySelector('input[name="quantity"]').value;
+    const total = currentProduct.price * quantity;
+    document.getElementById('totalAmount').value = '₫' + total.toLocaleString('vi-VN');
+}
+
+// Đóng modal khi click bên ngoài
+window.onclick = function(event) {
+    const modal = document.getElementById('buyModal');
+    if (event.target == modal) {
+        hideBuyForm();
+    }
+}
+</script>
 {% endblock %} 

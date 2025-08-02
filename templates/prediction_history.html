@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Lịch sử dự đoán - Health Prediction System{% endblock %}
+
+{% block content %}
+<section style="padding: 60px 0;">
+    <div class="container">
+        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 40px;">Lịch sử dự đoán của bạn</h2>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Loại dự đoán</th>
+                                <th>Kết quả</th>
+                                <th>Chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for prediction in predictions %}
+                            <tr>
+                                <td>{{ prediction.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
+                                <td>
+                                    {% if prediction.prediction_type == 'diabetes' %}
+                                    Tiểu đường
+                                    {% else %}
+                                    Bệnh tim
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if prediction.result %}
+                                    <span class="badge bg-danger">Có nguy cơ</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Không có nguy cơ</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" onclick="showDetails('{{ prediction.data|tojson|safe }}')">
+                                        Xem chi tiết
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal for showing prediction details -->
+<div class="modal fade" id="detailsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết dự đoán</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+function showDetails(data) {
+    const details = JSON.parse(data);
+    let html = '<table class="table">';
+    for (const [key, value] of Object.entries(details)) {
+        html += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
+    }
+    html += '</table>';
+    document.getElementById('modalBody').innerHTML = html;
+    
+    const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+    modal.show();
+}
+</script>
+{% endblock %}
+{% endblock %}

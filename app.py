@@ -1,10 +1,46 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import joblib
 import numpy as np
 import pandas as pd
 import os
+from datetime import datetime
+from functools import wraps
+
+from extensions import db
+from models import User, Product, Article, DiabetesPrediction, HeartPrediction, Order, OrderItem
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:@localhost/health_predictor"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your-secret-key-here'
+
+# Khởi tạo các extension với app
+db.init_app(app)
+
+# Create database tables
+with app.app_context():
+    db.create_all()
+
+# Error handlers
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()  # Rollback session in case of error
+    app.logger.error(f'Server Error: {error}')
+    return render_template('error.html', error=error), 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('error.html', error=error), 404
+
+# Decorator để kiểm tra đăng nhập
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Vui lòng đăng nhập để tiếp tục', 'warning')
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # Load Diabetes model
 try:
@@ -106,15 +142,212 @@ def articles():
 
 @app.route("/products")
 def products():
-    return render_template("products.html")
+    # Lấy sản phẩm từ database
+    diabetes_products = Product.query.filter_by(category='diabetes').all()
+    heart_products = Product.query.filter_by(category='heart').all()
+    
+    # Lấy thông tin user nếu đã đăng nhập
+    user = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+    
+    return render_template("products.html", 
+                         diabetes_products=diabetes_products,
+                         heart_products=heart_products,
+                         user=user)
+
+@app.route("/buy/<int:product_id>", methods=["POST"])
+@login_required
+def buy_product(product_id):
+    user = User.query.get(session['user_id'])
+    product = Product.query.get_or_404(product_id)
+    
+    # Lấy thông tin từ form
+    quantity = int(request.form.get('quantity', 1))
+    full_name = request.form.get('full_name', user.full_name)
+    phone = request.form.get('phone', user.phone)
+    address = request.form.get('address', user.address)
+    
+    if not all([full_name, phone, address]):
+        flash('Vui lòng điền đầy đủ thông tin giao hàng', 'error')
+        return redirect(url_for('products'))
+    
+    # Tạo đơn hàng mới
+    order = Order(
+        user_id=user.id,
+        full_name=full_name,
+        phone=phone,
+        address=address,
+        total_amount=product.price * quantity
+    )
+    db.session.add(order)
+    
+    # Thêm sản phẩm vào đơn hàng
+    order_item = OrderItem(
+        product_id=product.id,
+        quantity=quantity,
+        price=product.price
+    )
+    order.items.append(order_item)
+    
+    # Cập nhật thông tin user nếu cần
+    if not user.full_name or not user.phone or not user.address:
+        user.full_name = full_name
+        user.phone = phone
+        user.address = address
+    
+    try:
+        db.session.commit()
+        flash('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.', 'success')
+    except:
+        db.session.rollback()
+        flash('Có lỗi xảy ra, vui lòng thử lại sau.', 'error')
+    
+    return redirect(url_for('products'))
+
+@app.route("/my-orders")
+@login_required
+def my_orders():
+    user = User.query.get(session['user_id'])
+    orders = Order.query.filter_by(user_id=user.id).order_by(Order.created_at.desc()).all()
+    return render_template("my_orders.html", orders=orders)
 
 @app.route("/about")
 def about():
     return render_template("about.html")
 
+# Decorator để kiểm tra đăng nhập
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Vui lòng đăng nhập để tiếp tục', 'warning')
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    try:
+        # Nếu người dùng đã đăng nhập, chuyển hướng về trang chủ
+        if 'user_id' in session:
+            return redirect(url_for('home'))
+
+        if request.method == "POST":
+            # Lấy dữ liệu từ form
+            username = request.form.get('username', '').strip()
+            email = request.form.get('email', '').strip()
+            password = request.form.get('password', '')
+            
+            # Log dữ liệu nhận được (không log password)
+            app.logger.info(f"Register attempt - Username: {username}, Email: {email}")
+            
+            # Kiểm tra dữ liệu đầu vào
+            if not username or not email or not password:
+                flash('Vui lòng điền đầy đủ thông tin', 'error')
+                return render_template('register.html')
+            
+            # Kiểm tra độ dài username
+            if len(username) < 3:
+                flash('Tên đăng nhập phải có ít nhất 3 ký tự', 'error')
+                return render_template('register.html')
+            
+            # Kiểm tra độ dài và định dạng email
+            if len(email) < 5 or '@' not in email:
+                flash('Email không hợp lệ', 'error')
+                return render_template('register.html')
+            
+            # Kiểm tra độ dài password
+            if len(password) < 6:
+                flash('Mật khẩu phải có ít nhất 6 ký tự', 'error')
+                return render_template('register.html')
+            
+            # Kiểm tra username đã tồn tại
+            existing_user = User.query.filter_by(username=username).first()
+            if existing_user:
+                flash('Tên đăng nhập đã tồn tại', 'error')
+                return render_template('register.html')
+                
+            # Kiểm tra email đã tồn tại
+            existing_email = User.query.filter_by(email=email).first()
+            if existing_email:
+                flash('Email đã tồn tại', 'error')
+                return render_template('register.html')
+            
+            # Tạo user mới
+            user = User(
+                username=username,
+                email=email,
+                is_admin=False  # Mặc định là user thường
+            )
+            user.set_password(password)
+            
+            # Lưu vào database
+            db.session.add(user)
+            db.session.commit()
+            app.logger.info(f"User registered successfully: {username}")
+            
+            flash('Đăng ký thành công! Vui lòng đăng nhập', 'success')
+            return redirect(url_for('login'))
+            
+    except Exception as e:
+        db.session.rollback()
+        app.logger.error(f"Registration error: {str(e)}")
+        flash('Có lỗi xảy ra, vui lòng thử lại', 'error')
+        return render_template('register.html')
+            
+    return render_template('register.html')
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    # Nếu người dùng đã đăng nhập, chuyển hướng về trang chủ
+    if 'user_id' in session:
+        return redirect(url_for('home'))
+
+    if request.method == "POST":
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        if not email or not password:
+            flash('Vui lòng điền đầy đủ thông tin', 'error')
+            return render_template("login.html")
+        
+        user = User.query.filter_by(email=email).first()
+        
+        if user and user.check_password(password):
+            # Lưu thông tin user vào session
+            session['user_id'] = user.id
+            session['username'] = user.username
+            session['is_admin'] = user.is_admin
+            
+            flash('Đăng nhập thành công!', 'success')
+            next_page = request.args.get('next')
+            if next_page and next_page != '/logout':  # Tránh redirect loop
+                return redirect(next_page)
+            return redirect(url_for('home'))
+        
+        flash('Email hoặc mật khẩu không đúng', 'error')
     return render_template("login.html")
+
+# Hàm tiện ích để lấy thông tin user hiện tại
+def get_current_user():
+    if 'user_id' in session:
+        return User.query.get(session['user_id'])
+    return None
+
+@app.context_processor
+def utility_processor():
+    # Thêm các hàm và biến để sử dụng trong tất cả templates
+    return {
+        'get_current_user': get_current_user
+    }
+
+@app.route("/logout")
+def logout():
+    # Xóa tất cả thông tin session
+    session.clear()
+    flash('Đã đăng xuất thành công', 'success')
+    return redirect(url_for('home'))
 
 @app.route("/predict", methods=["GET", "POST"])
 def predict():
